@@ -48,7 +48,7 @@ export default function Docs() {
               </div>
               
               <div className="space-y-4">
-                <div>
+                {/* <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">Add DCFlight to your project</h3>
                   <CodeBlock
                     code="dart pub add dcflight"
@@ -59,7 +59,7 @@ export default function Docs() {
                     code="flutter pub add dcflight"
                     language="bash"
                   />
-                </div>
+                </div> */}
 
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">Install DCFlight CLI</h3>
