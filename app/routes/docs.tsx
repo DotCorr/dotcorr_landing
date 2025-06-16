@@ -99,7 +99,7 @@ export default function Docs() {
                 />
                 <CLICommand
                   command="dcf run"
-                  description="Run your DCFlight app with hot reload support"
+                  description="Run your DCFlight app with hot restart and hot reload support(actively being developed)"
                 />
               </div>
             </div>
