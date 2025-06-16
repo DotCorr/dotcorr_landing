@@ -17,26 +17,24 @@ export default function Home() {
               <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Dotcorr
               </div>
-              
+
               {/* Mesh-based switcher */}
               <div className="hidden md:flex bg-gray-100 rounded-full p-1">
                 <button
                   onClick={() => setActiveSection('opensource')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    activeSection === 'opensource'
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'opensource'
                       ? 'bg-white text-blue-600 shadow-sm'
                       : 'text-gray-600 hover:text-gray-900'
-                  }`}
+                    }`}
                 >
                   Open Source
                 </button>
                 <button
                   onClick={() => setActiveSection('agency')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    activeSection === 'agency'
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'agency'
                       ? 'bg-white text-blue-600 shadow-sm'
                       : 'text-gray-600 hover:text-gray-900'
-                  }`}
+                    }`}
                 >
                   Agency
                 </button>
@@ -52,8 +50,8 @@ export default function Home() {
                 <Map size={16} />
                 <span>Roadmap</span>
               </Link>
-              <a 
-                href="https://github.com/squirelboy360/dcflight" 
+              <a
+                href="https://github.com/dotcorr/dcflight"
                 className="text-gray-600 hover:text-gray-900"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -91,16 +89,16 @@ export default function Home() {
             <div className="text-center">
               <h4 className="font-semibold text-gray-900 mb-3">Get in Touch</h4>
               <div className="space-y-2">
-                <a 
+                <a
                   href="mailto:squirelwares@gmail.com"
                   className="block text-gray-600 hover:text-blue-600 transition-colors text-sm"
                 >
                   📧 squirelwares@gmail.com
                 </a>
-                <a 
+                <a
                   href="https://x.com/squirelBoy360"
                   target="_blank"
-                  rel="noopener noreferrer" 
+                  rel="noopener noreferrer"
                   className="block text-gray-600 hover:text-blue-600 transition-colors text-sm"
                 >
                   🐦 @squirelBoy360
@@ -110,8 +108,8 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-end space-y-3 sm:space-y-0 sm:space-x-4">
-              <a 
-                href="https://coff.ee/squirelboy360" 
+              <a
+                href="https://coff.ee/squirelboy360"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg transition-colors"
@@ -119,8 +117,8 @@ export default function Home() {
                 <Coffee size={16} />
                 <span>Buy me a coffee</span>
               </a>
-              <a 
-                href="https://github.com/squirelboy360/dcflight" 
+              <a
+                href="https://github.com/dotcorr/dcflight"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-600 hover:text-gray-900 transition-colors"
@@ -157,19 +155,19 @@ function OpenSourceSection() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-              Build native mobile apps with Dart. No platform views, no abstractions. 
+              Build native mobile apps with Dart. No platform views, no abstractions.
               Just pure native UI with React-like development experience.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link 
+              <Link
                 to="/docs"
                 className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors inline-flex items-center justify-center space-x-2"
               >
                 <span>Get Started</span>
                 <ExternalLink size={16} />
               </Link>
-              <a 
-                href="https://github.com/squirelboy360/dcflight" 
+              <a
+                href="https://github.com/dotcorr/dcflight"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="border border-gray-300 hover:border-gray-400 text-gray-700 px-8 py-3 rounded-lg font-medium transition-colors inline-flex items-center justify-center space-x-2"
@@ -191,7 +189,7 @@ function OpenSourceSection() {
               Write once in Dart, render native UI everywhere. DCFlight brings React-like development to native mobile.
             </p>
           </div>
-          
+
           <CrossPlatformIllustration />
         </div>
       </section>
@@ -226,7 +224,7 @@ function OpenSourceSection() {
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Simple, Powerful API</h2>
             <p className="text-gray-600">Build complex UIs with intuitive Dart syntax</p>
           </div>
-          
+
           <div className="bg-gray-900 rounded-lg p-3 sm:p-4 lg:p-6 overflow-hidden">
             <div className="flex items-center justify-between mb-3 sm:mb-4">
               <div className="flex space-x-1">
@@ -238,7 +236,7 @@ function OpenSourceSection() {
             </div>
             <div className="overflow-x-auto">
               <pre className="text-green-400 text-xs sm:text-sm leading-relaxed font-mono whitespace-pre" style={{ minWidth: 'max-content' }}>
-{`void main() {
+                {`void main() {
   DCFlight.start(app: MyApp());
 }
 
@@ -314,17 +312,17 @@ function AgencySection() {
             </span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            We build beautiful apps and websites for people. Specializing in mobile development 
+            We build beautiful apps and websites for people. Specializing in mobile development
             and modern web experiences.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
+            <button
               onClick={handleStartProject}
               className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
             >
               Start a Project
             </button>
-            <button 
+            <button
               disabled
               className="border border-gray-200 text-gray-400 px-8 py-3 rounded-lg font-medium cursor-not-allowed opacity-60"
               title="Coming Soon"
@@ -345,7 +343,7 @@ function AgencySection() {
               >
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="font-semibold text-gray-900">Get in Touch</h3>
-                  <button 
+                  <button
                     onClick={() => setShowContact(false)}
                     className="text-gray-400 hover:text-gray-600 transition-colors"
                   >
@@ -353,14 +351,14 @@ function AgencySection() {
                   </button>
                 </div>
                 <div className="space-y-3">
-                  <a 
+                  <a
                     href="mailto:squirelwares@gmail.com"
                     className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors"
                   >
                     <span>📧</span>
                     <span className="text-sm">squirelwares@gmail.com</span>
                   </a>
-                  <a 
+                  <a
                     href="https://x.com/squirelBoy360"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -408,7 +406,7 @@ function CrossPlatformIllustration() {
   return (
     <div className="py-16 bg-gradient-to-br from-white via-blue-50/30 to-purple-50/20">
       <div className="max-w-7xl mx-auto px-4">
-        
+
         {/* Code Editor at Top */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -427,7 +425,7 @@ function CrossPlatformIllustration() {
               <span className="text-gray-400 text-sm font-mono">main.dart</span>
             </div>
             <pre className="text-green-400 text-sm leading-relaxed font-mono">
-{`DCFView(
+              {`DCFView(
   children: [
     DCFText(
       "Hello DCFlight!"
@@ -446,7 +444,7 @@ function CrossPlatformIllustration() {
 
         {/* Three Platforms Horizontally at Bottom */}
         <div className="flex flex-col lg:flex-row justify-center items-center lg:items-end space-y-8 lg:space-y-0 lg:space-x-16">
-          
+
           {/* iOS */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -475,11 +473,11 @@ function CrossPlatformIllustration() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 flex items-center space-x-2">
               <div className="w-6 h-6 bg-gray-100 rounded-lg flex items-center justify-center">
                 <svg viewBox="0 0 24 24" className="w-4 h-4 fill-gray-600">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
                 </svg>
               </div>
               <span className="font-medium text-gray-700">iOS</span>
@@ -514,11 +512,11 @@ function CrossPlatformIllustration() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 flex items-center space-x-2">
               <div className="w-6 h-6 bg-green-100 rounded-lg flex items-center justify-center">
                 <svg viewBox="0 0 24 24" className="w-4 h-4 fill-green-600">
-                  <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 5.67a.637.637 0 0 0-.83-.22c-.3.16-.42.54-.26.85L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0zm7.5 0a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0z"/>
+                  <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 5.67a.637.637 0 0 0-.83-.22c-.3.16-.42.54-.26.85L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0zm7.5 0a1.25 1.25 0 1 1 2.5 0 1.25 1.25 0 0 1-2.5 0z" />
                 </svg>
               </div>
               <span className="font-medium text-gray-700">Android</span>
@@ -555,7 +553,7 @@ function CrossPlatformIllustration() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-4 flex items-center space-x-2">
               <div className="flex space-x-1">
                 <div className="w-5 h-5 bg-gradient-to-br from-red-400 via-yellow-400 to-green-400 rounded-full relative">
