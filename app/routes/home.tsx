@@ -245,81 +245,66 @@ function OpenSourceSection() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Available Components</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Rich Component Library</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              DCFlight provides a comprehensive set of native components ready for production use.
+              Build with a comprehensive set of native components, from basic UI to advanced interactions.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Featured Components - Just show the most important ones */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <ComponentCard
               name="DCFView"
-              description="Basic container component"
+              description="Container component"
               example="DCFView(children: [...])"
             />
             <ComponentCard
-              name="DCFText"
-              description="Text rendering with styling"
-              example="DCFText(content: 'Hello World')"
-            />
-            <ComponentCard
               name="DCFButton"
-              description="Interactive button component"
-              example="DCFButton(text: 'Click me', onTap: ...)"
+              description="Interactive buttons"
+              example="DCFButton(title: 'Click me')"
             />
             <ComponentCard
-              name="DCFImage"
-              description="Image display with caching"
-              example="DCFImage(src: 'image.png')"
+              name="DCFModal"
+              description="Native modals"
+              example="DCFModal(visible: true)"
             />
             <ComponentCard
-              name="DCFScrollView"
-              description="Scrollable container"
-              example="DCFScrollView(children: [...])"
-            />
-            <ComponentCard
-              name="DCFTextInput"
-              description="Text input fields"
-              example="DCFTextInput(placeholder: 'Enter text')"
-            />
-            <ComponentCard
-              name="DCFGestureDetector"
-              description="Gesture recognition"
-              example="DCFGestureDetector(onTap: ...)"
-            />
-            <ComponentCard
-              name="DCFAnimatedView"
-              description="View animations"
-              example="DCFAnimatedView(duration: 300)"
-            />
-            <ComponentCard
-              name="DCFPortal"
-              description="Render content outside component tree"
-              example="DCFPortal(targetId: 'modal')"
-            />
-            <ComponentCard
-              name="DCFPortalTarget"
-              description="Portal target for rendering portal content"
-              example="DCFPortalTarget(targetId: 'modal')"
-            />
-            <ComponentCard
-              name="DCFSafeAreaView"
-              description="Safe area handling"
-              example="DCFSafeAreaView(children: [...])"
-            />
-            <ComponentCard
-              name="DCFFlatList"
-              description="High-performance lists"
-              example="DCFFlatList(data: items, itemBuilder: ...)"
+              name="DCFAlert"
+              description="Alert dialogs"
+              example="DCFAlert(title: 'Alert')"
             />
           </div>
 
-          <div className="text-center mt-12">
+          {/* Quick overview of categories */}
+          <div className="grid md:grid-cols-4 gap-6 mb-8">
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="text-2xl font-bold text-blue-600 mb-2">8+</div>
+              <div className="text-sm text-gray-600">Basic Components</div>
+              <div className="text-xs text-gray-500 mt-1">View, Text, Button, Image...</div>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="text-2xl font-bold text-green-600 mb-2">4+</div>
+              <div className="text-sm text-gray-600">Input Components</div>
+              <div className="text-xs text-gray-500 mt-1">TextInput, Toggle, Checkbox...</div>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-600 mb-2">5+</div>
+              <div className="text-sm text-gray-600">Advanced Components</div>
+              <div className="text-xs text-gray-500 mt-1">Modal, Alert, Slider...</div>
+            </div>
+            <div className="text-center p-4 bg-gray-50 rounded-lg">
+              <div className="text-2xl font-bold text-orange-600 mb-2">4+</div>
+              <div className="text-sm text-gray-600">Interaction & Animation</div>
+              <div className="text-xs text-gray-500 mt-1">Gestures, Animations...</div>
+            </div>
+          </div>
+
+          <div className="text-center">
             <Link
               to="/docs"
               className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
-              <span>View Complete Documentation</span>
+              <span>View All 21+ Components</span>
               <ExternalLink size={16} />
             </Link>
           </div>

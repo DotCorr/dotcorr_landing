@@ -14,7 +14,8 @@ import {
   Package,
   Code,
   Users,
-  Heart
+  Heart,
+  ExternalLink
 } from "lucide-react";
 
 export default function Roadmap() {
@@ -44,13 +45,42 @@ export default function Roadmap() {
         >
           {/* Header */}
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              DCFlight Development Roadmap
-            </h1>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
-              Our journey to build the future of cross-platform development. 
-              Track our progress and see what's coming next.
-            </p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+            >
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+                DCFlight Development
+                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Roadmap
+                </span>
+              </h1>
+              <p className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed">
+                Our journey to build the future of cross-platform development. 
+                Track our progress and see what's coming next in the DCFlight ecosystem.
+              </p>
+              
+              {/* Progress Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
+                  <div className="text-2xl font-bold text-green-600">15+</div>
+                  <div className="text-sm text-gray-600">Components Ready</div>
+                </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
+                  <div className="text-2xl font-bold text-blue-600">iOS</div>
+                  <div className="text-sm text-gray-600">Platform Active</div>
+                </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
+                  <div className="text-2xl font-bold text-purple-600">Native</div>
+                  <div className="text-sm text-gray-600">Performance</div>
+                </div>
+                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
+                  <div className="text-2xl font-bold text-orange-600">Open</div>
+                  <div className="text-sm text-gray-600">Source</div>
+                </div>
+              </div>
+            </motion.div>
           </div>
 
           {/* Mobile-friendly Roadmap */}
@@ -103,7 +133,7 @@ export default function Roadmap() {
                   "✅ DCFIcon - Icon system",
                   "✅ DCFDropdown - Dropdown menu",
                   "🚧 DCFFlatList - High-performance lists (in progress)",
-                  "📅 Modal components",
+                  "✅ Modal components",
                   "📅 Navigation components",
                   "📅 Advanced animations"
                 ]}

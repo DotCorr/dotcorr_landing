@@ -691,6 +691,7 @@ function ComponentsSection() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
+            {/* Basic Components */}
             <ComponentCard
               name="DCFView"
               description="Basic container component for layout and styling"
@@ -722,34 +723,108 @@ function ComponentsSection() {
               example="DCFScrollView(children: [...])"
             />
             <ComponentCard
+              name="DCFFlatList"
+              description="High-performance list component for large datasets"
+              status="✅ Available"
+              example="DCFFlatList(data: items)"
+            />
+            <ComponentCard
+              name="DCFSvg"
+              description="SVG image support with full styling"
+              status="✅ Available"
+              example="DCFSvg(path: 'icon.svg')"
+            />
+            <ComponentCard
+              name="DCFIcon"
+              description="Icon system with built-in icon sets"
+              status="✅ Available"
+              example="DCFIcon(name: 'home')"
+            />
+            
+            {/* Interaction Components */}
+            <ComponentCard
+              name="DCFGestureDetector"
+              description="Gesture recognition for tap, swipe, pinch, etc."
+              status="✅ Available"
+              example="DCFGestureDetector(onTap: ...)"
+            />
+            <ComponentCard
+              name="DCFTouchableOpacity"
+              description="Touch interactions with opacity feedback"
+              status="✅ Available"
+              example="DCFTouchableOpacity(onPress: ...)"
+            />
+            
+            {/* Animation Components */}
+            <ComponentCard
+              name="DCFAnimatedView"
+              description="View animations with native performance"
+              status="✅ Available"
+              example="DCFAnimatedView(duration: 300)"
+            />
+            <ComponentCard
+              name="DCFAnimatedText"
+              description="Text animations and transitions"
+              status="✅ Available"
+              example="DCFAnimatedText(content: 'Hello')"
+            />
+            
+            {/* Input Components */}
+            <ComponentCard
               name="DCFTextInput"
               description="Text input fields with native keyboard support"
               status="✅ Available"
               example="DCFTextInput(placeholder: 'Enter text')"
             />
             <ComponentCard
-              name="DCFPortal"
-              description="Render content outside component hierarchy (modals, overlays)"
+              name="DCFDropdown"
+              description="Dropdown menu with native styling"
               status="✅ Available"
-              example="DCFPortal(targetId: 'modal')"
+              example="DCFDropdown(options: [...])"
             />
-            <ComponentCard
-              name="DCFPortalTarget"
-              description="Portal target for rendering portal content"
-              status="✅ Available"
-              example="DCFPortalTarget(targetId: 'modal')"
-            />
-            <ComponentCard
-              name="DCFFlatList"
-              description="High-performance list component for large datasets"
-              status="🚧 In Progress"
-              example="DCFFlatList(items: data)"
-            />
+            
+            {/* Advanced Components */}
             <ComponentCard
               name="DCFModal"
-              description="Modal dialog system with native animations"
-              status="📅 Planned"
-              example="DCFModal(visible: true)"
+              description="Native modal presentation with detents and gestures"
+              status="✅ Available"
+              example="DCFModal(visible: true, detents: [.medium])"
+            />
+            <ComponentCard
+              name="DCFToggle"
+              description="Switch/toggle component with native styling"
+              status="✅ Available"
+              example="DCFToggle(value: true, onValueChange: ...)"
+            />
+            <ComponentCard
+              name="DCFCheckbox"
+              description="Checkbox input with customizable styling"
+              status="✅ Available"
+              example="DCFCheckbox(checked: false, onValueChange: ...)"
+            />
+            <ComponentCard
+              name="DCFAlert"
+              description="Alert dialogs and action sheets with native presentation"
+              status="✅ Available"
+              example="DCFAlert(title: 'Alert', style: .alert)"
+            />
+            <ComponentCard
+              name="DCFSwipeableView"
+              description="Swipeable container with gesture support"
+              status="✅ Available"
+              example="DCFSwipeableView(onSwipe: ...)"
+            />
+            <ComponentCard
+              name="DCFSlider"
+              description="Range slider input with native styling"
+              status="✅ Available"
+              example="DCFSlider(value: 0.5, onValueChange: ...)"
+            />
+            <ComponentCard
+              name="DCFSpinner"
+              description="Loading spinner with different styles"
+              status="✅ Available"
+              example="DCFSpinner(animating: true, style: .medium)"
             />
           </div>
         </div>
@@ -1627,6 +1702,169 @@ function ExamplesSection() {
           </div>
         </div>
       </section>
+
+      {/* Real-world Example */}
+      <div className="mt-8 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6">
+        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center space-x-2">
+          <Zap className="w-5 h-5 text-blue-600" />
+          <span>Real-world Example: Interactive App</span>
+        </h3>
+        <p className="text-gray-600 mb-4">
+          Here's how you can combine multiple DCFlight components to create an interactive app with modals, toggles, and alerts:
+        </p>          
+          <CodeBlock
+            language="dart"
+            code={`import 'package:dcflight/dcflight.dart';
+
+class InteractiveApp extends StatefulComponent {
+  @override
+  DCFComponentNode render() {
+    final modalVisible = useState<bool>(false);
+    final toggleValue = useState<bool>(false);
+    final checkboxValue = useState<bool>(false);
+    final alertVisible = useState<bool>(false);
+
+    return DCFScrollView(
+      layout: LayoutProps(flex: 1, padding: 16.0),
+      children: [
+        // Header
+        DCFText(
+          content: "🚀 DCFlight Components Demo",
+          textProps: DCFTextProps(fontSize: 24, fontWeight: "bold"),
+          layout: LayoutProps(marginBottom: 20.0, height: 30.0),
+        ),
+
+        // Toggle Section
+        DCFView(
+          layout: LayoutProps(
+            flexDirection: YogaFlexDirection.row,
+            alignItems: YogaAlign.center,
+            height: 44,
+            marginBottom: 12,
+          ),
+          children: [
+            DCFToggle(
+              layout: LayoutProps(width: 60, height: 32),
+              value: toggleValue.state,
+              onValueChange: (data) {
+                toggleValue.setState(data['value'] as bool);
+              },
+              activeTrackColor: Colors.green,
+              size: DCFToggleSize.medium,
+            ),
+            DCFText(
+              content: "Enable notifications: \${toggleValue.state ? 'ON' : 'OFF'}",
+              layout: LayoutProps(marginLeft: 12, flex: 1),
+            ),
+          ],
+        ),
+
+        // Checkbox Section
+        DCFView(
+          layout: LayoutProps(
+            flexDirection: YogaFlexDirection.row,
+            alignItems: YogaAlign.center,
+            height: 44,
+            marginBottom: 20,
+          ),
+          children: [
+            DCFCheckbox(
+              layout: LayoutProps(width: 24, height: 24),
+              checked: checkboxValue.state,
+              onValueChange: (data) {
+                checkboxValue.setState(data['value'] as bool);
+              },
+              activeColor: Colors.blue,
+              size: DCFCheckboxSize.medium,
+            ),
+            DCFText(
+              content: "I agree to terms: \${checkboxValue.state ? 'Yes' : 'No'}",
+              layout: LayoutProps(marginLeft: 12, flex: 1),
+            ),
+          ],
+        ),
+
+        // Action Buttons
+        DCFButton(
+          buttonProps: DCFButtonProps(title: "Show Modal"),
+          layout: LayoutProps(marginBottom: 12.0, height: 44.0),
+          styleSheet: StyleSheet(backgroundColor: Colors.blue, borderRadius: 8),
+          onPress: (v) => modalVisible.setState(true),
+        ),
+
+        DCFButton(
+          buttonProps: DCFButtonProps(title: "Show Alert"),
+          layout: LayoutProps(marginBottom: 20, height: 44),
+          styleSheet: StyleSheet(backgroundColor: Colors.orange, borderRadius: 8),
+          onPress: (v) => alertVisible.setState(true),
+        ),
+
+        // Native Modal with multiple detents
+        DCFModal(
+          visible: modalVisible.state,
+          title: "Settings",
+          detents: [DCFModalDetents.medium, DCFModalDetents.large],
+          showDragIndicator: true,
+          onDismiss: (data) => modalVisible.setState(false),
+          children: [
+            DCFView(
+              layout: LayoutProps(
+                height: "100%",
+                padding: 20.0,
+                flexDirection: YogaFlexDirection.column,
+              ),
+              children: [
+                DCFText(
+                  content: "⚙️ App Settings",
+                  textProps: DCFTextProps(fontSize: 20, fontWeight: "bold"),
+                  layout: LayoutProps(marginBottom: 20),
+                ),
+                DCFSpinner(
+                  animating: true,
+                  color: Colors.blue,
+                  style: DCFSpinnerStyle.medium,
+                  layout: LayoutProps(height: 40, marginBottom: 20),
+                ),
+                DCFButton(
+                  buttonProps: DCFButtonProps(title: "Close"),
+                  layout: LayoutProps(height: 44),
+                  styleSheet: StyleSheet(backgroundColor: Colors.red, borderRadius: 8),
+                  onPress: (v) => modalVisible.setState(false),
+                ),
+              ],
+            ),
+          ],
+        ),
+
+        // Alert Dialog
+        DCFAlert(
+          visible: alertVisible.state,
+          title: "Confirmation",
+          message: "Are you sure you want to proceed?",
+          style: DCFAlertStyle.alert,
+          actions: [
+            DCFAlertAction(
+              title: 'Cancel',
+              style: DCFAlertActionStyle.cancel,
+              handler: 'cancel',
+            ),
+            DCFAlertAction(
+              title: 'OK',
+              style: DCFAlertActionStyle.defaultStyle,
+              handler: 'confirm',
+            ),
+          ],
+          onActionPress: (data) {
+            alertVisible.setState(false);
+            print("Alert action: \${data['handler']}");
+          },
+        ),
+      ],
+    );
+  }
+}`}
+          />
+      </div>
     </motion.div>
   );
 }
