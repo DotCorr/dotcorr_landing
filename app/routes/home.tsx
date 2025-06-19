@@ -14,11 +14,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Dotcorr
               </div>
 
-              {/* Mesh-based switcher */}
+              {/* Desktop switcher */}
               <div className="hidden md:flex bg-gray-100 rounded-full p-1">
                 <button
                   onClick={() => setActiveSection('opensource')}
@@ -41,14 +41,14 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex items-center space-x-6">
+            <div className="flex items-center space-x-4 sm:space-x-6">
               <Link to="/docs" className="text-gray-600 hover:text-gray-900 flex items-center space-x-1">
                 <FileText size={16} />
-                <span>Docs</span>
+                <span className="hidden sm:inline">Docs</span>
               </Link>
               <Link to="/roadmap" className="text-gray-600 hover:text-gray-900 flex items-center space-x-1">
                 <Map size={16} />
-                <span>Roadmap</span>
+                <span className="hidden sm:inline">Roadmap</span>
               </Link>
               <a
                 href="https://github.com/dotcorr/dcflight"
@@ -58,6 +58,30 @@ export default function Home() {
               >
                 <Github size={20} />
               </a>
+            </div>
+          </div>
+
+          {/* Mobile switcher */}
+          <div className="md:hidden pb-4 px-4">
+            <div className="bg-gray-100 rounded-full p-1 max-w-xs mx-auto">
+              <button
+                onClick={() => setActiveSection('opensource')}
+                className={`w-1/2 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'opensource'
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-gray-600'
+                  }`}
+              >
+                Open Source
+              </button>
+              <button
+                onClick={() => setActiveSection('agency')}
+                className={`w-1/2 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'agency'
+                    ? 'bg-white text-blue-600 shadow-sm'
+                    : 'text-gray-600'
+                  }`}
+              >
+                Agency
+              </button>
             </div>
           </div>
         </div>
@@ -213,6 +237,91 @@ function OpenSourceSection() {
               title="No Abstractions"
               description="Direct access to native views. No platform views or unnecessary abstractions."
             />
+          </div>
+        </div>
+      </section>
+
+      {/* Available Components Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Available Components</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              DCFlight provides a comprehensive set of native components ready for production use.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <ComponentCard
+              name="DCFView"
+              description="Basic container component"
+              example="DCFView(children: [...])"
+            />
+            <ComponentCard
+              name="DCFText"
+              description="Text rendering with styling"
+              example="DCFText(content: 'Hello World')"
+            />
+            <ComponentCard
+              name="DCFButton"
+              description="Interactive button component"
+              example="DCFButton(text: 'Click me', onTap: ...)"
+            />
+            <ComponentCard
+              name="DCFImage"
+              description="Image display with caching"
+              example="DCFImage(src: 'image.png')"
+            />
+            <ComponentCard
+              name="DCFScrollView"
+              description="Scrollable container"
+              example="DCFScrollView(children: [...])"
+            />
+            <ComponentCard
+              name="DCFTextInput"
+              description="Text input fields"
+              example="DCFTextInput(placeholder: 'Enter text')"
+            />
+            <ComponentCard
+              name="DCFGestureDetector"
+              description="Gesture recognition"
+              example="DCFGestureDetector(onTap: ...)"
+            />
+            <ComponentCard
+              name="DCFAnimatedView"
+              description="View animations"
+              example="DCFAnimatedView(duration: 300)"
+            />
+            <ComponentCard
+              name="DCFPortal"
+              description="Render content outside component tree"
+              example="DCFPortal(targetId: 'modal')"
+            />
+            <ComponentCard
+              name="DCFPortalTarget"
+              description="Portal target for rendering portal content"
+              example="DCFPortalTarget(targetId: 'modal')"
+            />
+            <ComponentCard
+              name="DCFSafeAreaView"
+              description="Safe area handling"
+              example="DCFSafeAreaView(children: [...])"
+            />
+            <ComponentCard
+              name="DCFFlatList"
+              description="High-performance lists"
+              example="DCFFlatList(data: items, itemBuilder: ...)"
+            />
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              to="/docs"
+              className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            >
+              <span>View Complete Documentation</span>
+              <ExternalLink size={16} />
+            </Link>
           </div>
         </div>
       </section>
@@ -607,6 +716,31 @@ function FeatureCard({ icon, title, description }: { icon: string; title: string
       <div className="text-3xl mb-4">{icon}</div>
       <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
       <p className="text-gray-600">{description}</p>
+    </motion.div>
+  );
+}
+
+function ComponentCard({ 
+  name, 
+  description, 
+  example 
+}: { 
+  name: string; 
+  description: string; 
+  example: string; 
+}) {
+  return (
+    <motion.div
+      whileHover={{ y: -2, scale: 1.02 }}
+      className="bg-white p-4 rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-all duration-200"
+    >
+      <div className="mb-3">
+        <h3 className="text-lg font-semibold text-gray-900 mb-1">{name}</h3>
+        <p className="text-sm text-gray-600">{description}</p>
+      </div>
+      <div className="bg-gray-50 rounded p-2">
+        <code className="text-xs text-gray-700 font-mono break-all">{example}</code>
+      </div>
     </motion.div>
   );
 }
