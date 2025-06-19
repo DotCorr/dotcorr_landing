@@ -1,6 +1,6 @@
 import type { Route } from "./+types/roadmap";
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router";
 import { 
   ArrowLeft, 
@@ -15,10 +15,46 @@ import {
   Code,
   Users,
   Heart,
-  ExternalLink
+  ExternalLink,
+  X,
+  AlertTriangle
 } from "lucide-react";
 
 export default function Roadmap() {
+  const [showBanner, setShowBanner] = useState(true);
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    // Target date: Friday, June 27, 2025 at 5:00 PM UTC
+    const targetDate = new Date('2025-06-27T17:00:00Z').getTime();
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      } else {
+        setShowBanner(false);
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const dismissBanner = () => {
+    setShowBanner(false);
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Navigation */}
@@ -36,6 +72,64 @@ export default function Roadmap() {
           </div>
         </div>
       </nav>
+
+      {/* Public Release Countdown Banner */}
+      <AnimatePresence>
+        {showBanner && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{ duration: 0.3 }}
+            className="bg-gradient-to-r from-amber-400 to-orange-500 text-white relative"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3 flex-1">
+                  <AlertTriangle className="w-5 h-5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium">
+                      <span className="hidden sm:inline">⚠️ Framework Currently Unavailable: </span>
+                      <span className="sm:hidden">⚠️ Unavailable: </span>
+                      DCFlight will be released in pre-release form. Not available until then.
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Countdown */}
+                <div className="flex items-center space-x-4 mx-4">
+                  <div className="hidden md:flex items-center space-x-2 text-xs font-mono bg-white/20 rounded-lg px-3 py-1">
+                    <span className="text-white/90">Available in:</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-xs font-mono">
+                    <div className="bg-white/20 rounded px-2 py-1">
+                      {timeLeft.days}d
+                    </div>
+                    <div className="bg-white/20 rounded px-2 py-1">
+                      {timeLeft.hours}h
+                    </div>
+                    <div className="bg-white/20 rounded px-2 py-1 hidden sm:block">
+                      {timeLeft.minutes}m
+                    </div>
+                    <div className="bg-white/20 rounded px-2 py-1 hidden sm:block">
+                      {timeLeft.seconds}s
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dismiss Button */}
+                <button
+                  onClick={dismissBanner}
+                  className="p-1 hover:bg-white/20 rounded-full transition-colors flex-shrink-0"
+                  aria-label="Dismiss banner"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
         <motion.div
