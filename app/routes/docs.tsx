@@ -298,8 +298,7 @@ function GettingStartedSection() {
                     <h4 className="font-semibold text-amber-800 mb-2">About Flutter Dependency</h4>
                     <div className="text-amber-700 text-sm space-y-2">
                       <p>
-                        <strong>Current:</strong> DCFlight uses Flutter SDK only as an app runtime - 
-                        the Dart VM and platform channels. Flutter's UI abstractions are completely bypassed.
+                        <strong>Current:</strong> DCFlight uses Flutter SDK (build tools, Flutter Engine, etc) - Flutter's UI abstractions are completely bypassed.
                       </p>
                       <p>
                         <strong>Future:</strong> We plan to ship with <span className="font-semibold">"Flutter Naked"</span> - 

@@ -22,6 +22,7 @@ import {
 
 export default function Roadmap() {
   const [showBanner, setShowBanner] = useState(true);
+  const [showPersistentStatus, setShowPersistentStatus] = useState(false);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -54,6 +55,7 @@ export default function Roadmap() {
 
   const dismissBanner = () => {
     setShowBanner(false);
+    setShowPersistentStatus(true);
   };
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
@@ -124,6 +126,37 @@ export default function Roadmap() {
                   aria-label="Dismiss banner"
                 >
                   <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Persistent Status Indicator (after banner dismissal) */}
+      <AnimatePresence>
+        {showPersistentStatus && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="bg-amber-50 border-b border-amber-200 sticky top-16 z-40"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <AlertTriangle className="w-4 h-4 text-amber-600" />
+                  <span className="text-sm text-amber-800 font-medium">
+                    Framework not yet functional - Pre-release countdown: {timeLeft.days}d {timeLeft.hours}h
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowPersistentStatus(false)}
+                  className="text-amber-600 hover:text-amber-800 p-1"
+                  aria-label="Hide status"
+                >
+                  <X className="w-3 h-3" />
                 </button>
               </div>
             </div>
