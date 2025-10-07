@@ -65,6 +65,7 @@
     box-sizing: border-box;
   }
   
+  
   body {
     min-height: 100vh;
     background: linear-gradient(to bottom, #fafbfc 0%, #f0f4f8 100%);
