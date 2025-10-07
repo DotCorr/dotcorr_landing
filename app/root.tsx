@@ -23,7 +23,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export function meta(): Route.MetaDescriptor[] {
+export function meta(): Route.MetaDescriptors {
   return [
     { title: "Dotcorr - DCFlight Framework | Native Cross-Platform Development" },
     { 
@@ -47,12 +47,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="bg-background text-foreground font-sans antialiased min-h-screen flex flex-col items-center justify-center transition-colors duration-300">
-        <div className="w-full max-w-3xl px-6 py-10">
-          <div className="card rounded soft-shadow">
-            {children}
-          </div>
-        </div>
+      <body>
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>

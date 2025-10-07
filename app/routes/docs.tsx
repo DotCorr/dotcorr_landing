@@ -41,24 +41,36 @@ export default function Docs() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-sm">
-        <div className="max-w-4xl mx-auto px-6">
+      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 z-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors"><ArrowLeft size={22} /><span className="hidden sm:inline">Back to Home</span></Link>
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent tracking-tight">DCFlight Docs</div>
-            <button onClick={toggleMobileMenu} className="lg:hidden p-2 text-gray-600 hover:text-blue-600 transition-colors">{isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}</button>
-            <div className="hidden lg:block w-20"></div>
+            <div className="flex items-center gap-8">
+              <Link to="/" className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+                <ArrowLeft size={20} />
+                <span className="text-sm font-medium">Back</span>
+              </Link>
+              <h1 className="text-xl font-bold text-gray-900">Documentation</h1>
+            </div>
+            <button 
+              onClick={toggleMobileMenu} 
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
       </nav>
 
-      <div className="flex relative">
+      <div className="flex pt-16">
         {/* Mobile Sidebar Overlay */}
-        {isMobileMenuOpen && (<div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden" onClick={closeMobileMenu} />)}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden" onClick={closeMobileMenu} />
+        )}
+        
         {/* Sidebar */}
-        <aside className={`${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:static top-16 left-0 w-72 bg-white/90 backdrop-blur-sm border-r border-border h-screen overflow-y-auto z-50 transition-transform duration-300 ease-in-out shadow-md`}> 
+        <aside className={`${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 fixed lg:sticky top-16 left-0 w-64 bg-white border-r border-gray-200 h-[calc(100vh-4rem)] overflow-y-auto z-50 transition-transform duration-300`}> 
           <div className="p-6">
             <nav className="space-y-2">
               <SidebarSection
@@ -138,17 +150,15 @@ export default function Docs() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto lg:ml-0">
-          <div className="max-w-3xl mx-auto px-6 py-10">
-            <div className="card rounded soft-shadow">
-              <AnimatePresence mode="wait">
-                {activeSection === 'getting-started' && <GettingStartedSection key="getting-started" />}
-                {activeSection === 'architecture' && <ArchitectureSection key="architecture" />}
-                {activeSection === 'components' && <ComponentsSection key="components" />}
-                {activeSection === 'development' && <DevelopmentSection key="development" />}
-                {activeSection === 'examples' && <ExamplesSection key="examples" />}
-              </AnimatePresence>
-            </div>
+        <main className="flex-1 overflow-y-auto">
+          <div className="max-w-4xl mx-auto px-6 lg:px-12 py-12">
+            <AnimatePresence mode="wait">
+              {activeSection === 'getting-started' && <GettingStartedSection key="getting-started" />}
+              {activeSection === 'architecture' && <ArchitectureSection key="architecture" />}
+              {activeSection === 'components' && <ComponentsSection key="components" />}
+              {activeSection === 'development' && <DevelopmentSection key="development" />}
+              {activeSection === 'examples' && <ExamplesSection key="examples" />}
+            </AnimatePresence>
           </div>
         </main>
       </div>

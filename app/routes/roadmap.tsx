@@ -1,6 +1,6 @@
 import type { Route } from "./+types/roadmap";
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router";
 import { 
   ArrowLeft, 
@@ -15,186 +15,43 @@ import {
   Code,
   Users,
   Heart,
-  ExternalLink,
-  X,
-  AlertTriangle
+  ExternalLink
 } from "lucide-react";
 
 export default function Roadmap() {
-  const [showBanner, setShowBanner] = useState(true);
-  const [showPersistentStatus, setShowPersistentStatus] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  useEffect(() => {
-    // Target date: Friday, June 27, 2025 at 5:00 PM UTC
-    const targetDate = new Date('2025-06-27T17:00:00Z').getTime();
-
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const difference = targetDate - now;
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000)
-        });
-      } else {
-        setShowBanner(false);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const dismissBanner = () => {
-    setShowBanner(false);
-    setShowPersistentStatus(true);
-  };
   return (
-  <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-sm">
-        <div className="max-w-4xl mx-auto px-6">
+      <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 z-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors"><ArrowLeft size={22} /><span className="hidden sm:inline">Back to Home</span></Link>
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent tracking-tight">DCFlight Roadmap</div>
+            <Link to="/" className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+              <ArrowLeft size={20} />
+              <span className="text-sm font-medium">Back</span>
+            </Link>
+            <h1 className="text-xl font-bold text-gray-900">Roadmap</h1>
             <div className="w-20"></div>
           </div>
         </div>
       </nav>
 
-      {/* Public Release Countdown Banner */}
-      <AnimatePresence>
-        {showBanner && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{ duration: 0.3 }}
-            className="bg-gradient-to-r from-amber-400 to-orange-500 text-white relative"
-          >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3 flex-1">
-                  <AlertTriangle className="w-5 h-5 flex-shrink-0" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">
-                      <span className="hidden sm:inline">⚠️ Framework Currently Unavailable: </span>
-                      <span className="sm:hidden">⚠️ Unavailable: </span>
-                      DCFlight will be released in pre-release form. Not available until then.
-                    </p>
-                  </div>
-                </div>
-                
-                {/* Countdown */}
-                <div className="flex items-center space-x-4 mx-4">
-                  <div className="hidden md:flex items-center space-x-2 text-xs font-mono bg-white/20 rounded-lg px-3 py-1">
-                    <span className="text-white/90">Available in:</span>
-                  </div>
-                  <div className="flex items-center space-x-1 text-xs font-mono">
-                    <div className="bg-white/20 rounded px-2 py-1">
-                      {timeLeft.days}d
-                    </div>
-                    <div className="bg-white/20 rounded px-2 py-1">
-                      {timeLeft.hours}h
-                    </div>
-                    <div className="bg-white/20 rounded px-2 py-1 hidden sm:block">
-                      {timeLeft.minutes}m
-                    </div>
-                    <div className="bg-white/20 rounded px-2 py-1 hidden sm:block">
-                      {timeLeft.seconds}s
-                    </div>
-                  </div>
-                </div>
-
-                {/* Dismiss Button */}
-                <button
-                  onClick={dismissBanner}
-                  className="p-1 hover:bg-white/20 rounded-full transition-colors flex-shrink-0"
-                  aria-label="Dismiss banner"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Persistent Status Indicator (after banner dismissal) */}
-      <AnimatePresence>
-        {showPersistentStatus && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="bg-amber-50 border-b border-amber-200 sticky top-16 z-40"
-          >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  <span className="text-sm text-amber-800 font-medium">
-                    Framework not yet functional - Pre-release countdown: {timeLeft.days}d {timeLeft.hours}h
-                  </span>
-                </div>
-                <button
-                  onClick={() => setShowPersistentStatus(false)}
-                  className="text-amber-600 hover:text-amber-800 p-1"
-                  aria-label="Hide status"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <div className="max-w-3xl mx-auto px-6 py-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <div className="card rounded soft-shadow text-center mb-12 sm:mb-16">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                DCFlight Development
-                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+      <div className="pt-16">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 py-16">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            {/* Hero Section */}
+            <div className="text-center mb-20">
+              <h2 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 tracking-tight leading-none">
+                Development
+                <br />
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                   Roadmap
                 </span>
-              </h1>
-              <p className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed">
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
                 Our journey to build the future of cross-platform development. 
-                Track our progress and see what's coming next in the DCFlight ecosystem.
+                Track our progress and see what's coming next.
               </p>
-              
-              {/* Progress Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
-                  <div className="text-2xl font-bold text-green-600">15+</div>
-                  <div className="text-sm text-gray-600">Components Ready</div>
-                </div>
-                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
-                  <div className="text-2xl font-bold text-blue-600">iOS</div>
-                  <div className="text-sm text-gray-600">Platform Active</div>
-                </div>
-                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
-                  <div className="text-2xl font-bold text-purple-600">Native</div>
-                  <div className="text-sm text-gray-600">Performance</div>
-                </div>
-                <div className="bg-white/60 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
-                  <div className="text-2xl font-bold text-orange-600">Open</div>
-                  <div className="text-sm text-gray-600">Source</div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+            </div>
 
           {/* Mobile-friendly Roadmap */}
           <div className="relative">
@@ -420,13 +277,12 @@ export default function Roadmap() {
               />
             </div>
           </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
     </div>
   );
-}
-
-function RoadmapBranch({ 
+}function RoadmapBranch({ 
   status, 
   side, 
   title, 
