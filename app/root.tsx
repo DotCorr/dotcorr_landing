@@ -47,8 +47,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
-        {children}
+      <body className="bg-background text-foreground font-sans antialiased min-h-screen flex flex-col items-center justify-center transition-colors duration-300">
+        <div className="w-full max-w-3xl px-6 py-10">
+          <div className="card rounded soft-shadow">
+            {children}
+          </div>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -77,14 +81,16 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className="flex flex-col items-center justify-center min-h-[60vh]">
+      <div className="card rounded soft-shadow max-w-xl w-full text-center">
+        <h1>{message}</h1>
+        <p>{details}</p>
+        {stack && (
+          <pre className="w-full p-4 overflow-x-auto bg-muted rounded mt-4 text-left">
+            <code>{stack}</code>
+          </pre>
+        )}
+      </div>
     </main>
   );
 }

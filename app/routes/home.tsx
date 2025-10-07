@@ -44,80 +44,35 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="bg-white/80 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-sm">
+        <div className="max-w-4xl mx-auto px-6">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Dotcorr
-              </div>
-
-              {/* Desktop switcher */}
-              <div className="hidden md:flex bg-gray-100 rounded-full p-1">
+            <div className="flex items-center gap-6">
+              <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent tracking-tight">Dotcorr</div>
+              <div className="hidden md:flex bg-muted rounded-full p-1 shadow-sm">
                 <button
                   onClick={() => setActiveSection('opensource')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'opensource'
-                      ? 'bg-white text-blue-600 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                >
-                  Open Source
-                </button>
+                  className={`px-5 py-2 rounded-full text-base font-medium transition-all duration-200 ${activeSection === 'opensource' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}`}
+                >Open Source</button>
                 <button
                   onClick={() => setActiveSection('agency')}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'agency'
-                      ? 'bg-white text-blue-600 shadow-sm'
-                      : 'text-gray-600 hover:text-gray-900'
-                    }`}
-                >
-                  Agency
-                </button>
+                  className={`px-5 py-2 rounded-full text-base font-medium transition-all duration-200 ${activeSection === 'agency' ? 'bg-white text-blue-600 shadow' : 'text-gray-600 hover:text-gray-900'}`}
+                >Agency</button>
               </div>
             </div>
-
-            <div className="flex items-center space-x-4 sm:space-x-6">
-              <Link to="/docs" className="text-gray-600 hover:text-gray-900 flex items-center space-x-1">
-                <FileText size={16} />
-                <span className="hidden sm:inline">Docs</span>
-              </Link>
-              <Link to="/roadmap" className="text-gray-600 hover:text-gray-900 flex items-center space-x-1">
-                <Map size={16} />
-                <span className="hidden sm:inline">Roadmap</span>
-              </Link>
-              <a
-                href="https://github.com/dotcorr/dcflight"
-                className="text-gray-600 hover:text-gray-900"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Github size={20} />
-              </a>
+            <div className="flex items-center gap-5">
+              <Link to="/docs" className="text-gray-600 hover:text-blue-600 flex items-center gap-1 transition-colors"><FileText size={18} /><span className="hidden sm:inline">Docs</span></Link>
+              <Link to="/roadmap" className="text-gray-600 hover:text-blue-600 flex items-center gap-1 transition-colors"><Map size={18} /><span className="hidden sm:inline">Roadmap</span></Link>
+              <a href="https://github.com/dotcorr/dcflight" className="text-gray-600 hover:text-blue-600 transition-colors" target="_blank" rel="noopener noreferrer"><Github size={22} /></a>
             </div>
           </div>
-
           {/* Mobile switcher */}
-          <div className="md:hidden pb-4 px-4">
-            <div className="bg-gray-100 rounded-full p-1 max-w-xs mx-auto">
-              <button
-                onClick={() => setActiveSection('opensource')}
-                className={`w-1/2 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'opensource'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600'
-                  }`}
-              >
-                Open Source
-              </button>
-              <button
-                onClick={() => setActiveSection('agency')}
-                className={`w-1/2 py-2 rounded-full text-sm font-medium transition-all duration-200 ${activeSection === 'agency'
-                    ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600'
-                  }`}
-              >
-                Agency
-              </button>
+          <div className="md:hidden pb-4 px-2">
+            <div className="bg-muted rounded-full p-1 max-w-xs mx-auto shadow-sm flex gap-2">
+              <button onClick={() => setActiveSection('opensource')} className={`w-1/2 py-2 rounded-full text-base font-medium transition-all duration-200 ${activeSection === 'opensource' ? 'bg-white text-blue-600 shadow' : 'text-gray-600'}`}>Open Source</button>
+              <button onClick={() => setActiveSection('agency')} className={`w-1/2 py-2 rounded-full text-base font-medium transition-all duration-200 ${activeSection === 'agency' ? 'bg-white text-blue-600 shadow' : 'text-gray-600'}`}>Agency</button>
             </div>
           </div>
         </div>
@@ -221,59 +176,26 @@ export default function Home() {
       </AnimatePresence>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <footer className="bg-white border-t border-border py-10 mt-10 shadow-sm">
+        <div className="max-w-4xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             {/* Copyright and Description */}
             <div className="text-center md:text-left">
-              <div className="text-gray-600 mb-2">
-                © 2025 Dotcorr. Building the future of cross-platform development.
-              </div>
-              <div className="text-sm text-gray-500">
-                Open source framework for native mobile development with Dart.
-              </div>
+              <div className="text-gray-600 mb-2">© 2025 Dotcorr. Building the future of cross-platform development.</div>
+              <div className="text-sm text-gray-500">Open source framework for native mobile development with Dart.</div>
             </div>
-
             {/* Contact Information */}
             <div className="text-center">
               <h4 className="font-semibold text-gray-900 mb-3">Get in Touch</h4>
               <div className="space-y-2">
-                <a
-                  href="mailto:squirelwares@gmail.com"
-                  className="block text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  📧 squirelwares@gmail.com
-                </a>
-                <a
-                  href="https://x.com/squirelBoy360"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-gray-600 hover:text-blue-600 transition-colors text-sm"
-                >
-                  🐦 @squirelBoy360
-                </a>
+                <a href="mailto:squirelwares@gmail.com" className="block text-gray-600 hover:text-blue-600 transition-colors text-sm">📧 squirelwares@gmail.com</a>
+                <a href="https://x.com/squirelBoy360" target="_blank" rel="noopener noreferrer" className="block text-gray-600 hover:text-blue-600 transition-colors text-sm">🐦 @squirelBoy360</a>
               </div>
             </div>
-
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-end space-y-3 sm:space-y-0 sm:space-x-4">
-              <a
-                href="https://coff.ee/squirelboy360"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-2 bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg transition-colors"
-              >
-                <Coffee size={16} />
-                <span>Buy me a coffee</span>
-              </a>
-              <a
-                href="https://github.com/dotcorr/dcflight"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                <Github size={20} />
-              </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-end gap-4">
+              <a href="https://coff.ee/squirelboy360" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-black px-5 py-2 rounded-xl shadow transition-colors"><Coffee size={18} /><span>Buy me a coffee</span></a>
+              <a href="https://github.com/dotcorr/dcflight" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-blue-600 transition-colors"><Github size={22} /></a>
             </div>
           </div>
         </div>

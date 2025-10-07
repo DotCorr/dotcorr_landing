@@ -58,19 +58,14 @@ export default function Roadmap() {
     setShowPersistentStatus(true);
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+  <div className="min-h-screen bg-background flex flex-col">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="bg-white/80 backdrop-blur-md border-b border-border sticky top-0 z-50 shadow-sm">
+        <div className="max-w-4xl mx-auto px-6">
           <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center space-x-3 text-gray-600 hover:text-gray-900">
-              <ArrowLeft size={20} />
-              <span className="hidden sm:inline">Back to Home</span>
-            </Link>
-            <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              DCFlight Roadmap
-            </div>
-            <div className="w-20"></div> {/* Spacer for centering */}
+            <Link to="/" className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors"><ArrowLeft size={22} /><span className="hidden sm:inline">Back to Home</span></Link>
+            <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent tracking-tight">DCFlight Roadmap</div>
+            <div className="w-20"></div>
           </div>
         </div>
       </nav>
@@ -164,19 +159,10 @@ export default function Roadmap() {
         )}
       </AnimatePresence>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {/* Header */}
-          <div className="text-center mb-12 sm:mb-16">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <div className="card rounded soft-shadow text-center mb-12 sm:mb-16">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}>
               <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
                 DCFlight Development
                 <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
