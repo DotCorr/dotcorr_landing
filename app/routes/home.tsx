@@ -194,17 +194,17 @@ function OpenSourceSection() {
             <ComponentCard
               name="DCFButton"
               description="Interactive buttons"
-              example="DCFButton(title: 'Click me')"
+              example="DCFButton(buttonProps: DCFButtonProps(title: 'Click'))"
             />
             <ComponentCard
               name="DCFModal"
               description="Native modals"
-              example="DCFModal(visible: true)"
+              example="DCFModal(isVisible: true)"
             />
             <ComponentCard
               name="DCFAlert"
               description="Alert dialogs"
-              example="DCFAlert(title: 'Alert')"
+              example="DCFAlert(title: 'Alert', message: 'Content')"
             />
           </div>
 
@@ -267,29 +267,32 @@ function OpenSourceSection() {
   DCFlight.start(app: MyApp());
 }
 
-class MyApp extends StatefulComponent {
+class MyApp extends DCFStatefulComponent {
   @override
   DCFComponentNode render() {
     final counter = useState(0);
     
     return DCFView(
-      layout: LayoutProps(
+      layout: DCFLayout(
         flex: 1,
         justifyContent: YogaJustifyContent.center,
         alignItems: YogaAlign.center,
       ),
       children: [
         DCFText(
-          content: "Count: \${counter.value}",
+          content: "Count: \${counter.state}",
           textProps: DCFTextProps(fontSize: 24),
         ),
         DCFButton(
           buttonProps: DCFButtonProps(title: "Increment"),
-          onPress: () => counter.setValue(counter.value + 1),
+          onPress: (v) => counter.setState(counter.state + 1),
         ),
       ],
     );
   }
+  
+  @override
+  List<Object?> get props => [];
 }`}
               </pre>
             </div>
@@ -455,11 +458,12 @@ function CrossPlatformIllustration() {
               {`DCFView(
   children: [
     DCFText(
-      "Hello DCFlight!"
+      content: "Hello DCFlight!",
+      textProps: DCFTextProps(fontSize: 16),
     ),
     DCFButton(
-      title: "Click me",
-      onPress: () {
+      buttonProps: DCFButtonProps(title: "Click me"),
+      onPress: (v) {
         // Native action
       }
     )

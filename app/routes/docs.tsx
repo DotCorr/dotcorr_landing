@@ -173,15 +173,23 @@ function Architecture() {
           <p className="text-gray-600 mb-4">
             Components are the building blocks of DCFlight apps. Each component manages its own state and renders to native views.
           </p>
-          <CodeBlock code={`class MyComponent extends Component {
+          <CodeBlock code={`class MyComponent extends DCFStatefulComponent {
   @override
-  Widget build(BuildContext context) {
+  DCFComponentNode render() {
     return DCFView(
       children: [
-        DCFText('Hello, DCFlight!'),
+        DCFText(
+          content: 'Hello, DCFlight!',
+          textProps: DCFTextProps(
+            fontSize: 16,
+          ),
+        ),
       ],
     );
   }
+  
+  @override
+  List<Object?> get props => [];
 }`} />
         </Section>
 
@@ -224,14 +232,20 @@ function Components() {
             DCFlight uses the Yoga layout engine, providing flexbox-like layout capabilities:
           </p>
           <CodeBlock code={`DCFView(
-  style: ViewStyle(
-    flexDirection: FlexDirection.row,
-    justifyContent: JustifyContent.spaceBetween,
-    padding: EdgeInsets.all(16),
+  layout: DCFLayout(
+    flexDirection: YogaFlexDirection.row,
+    justifyContent: YogaJustifyContent.spaceBetween,
+    padding: 16,
   ),
   children: [
-    DCFText('Left'),
-    DCFText('Right'),
+    DCFText(
+      content: 'Left',
+      textProps: DCFTextProps(fontSize: 16),
+    ),
+    DCFText(
+      content: 'Right',
+      textProps: DCFTextProps(fontSize: 16),
+    ),
   ],
 )`} />
         </Section>
@@ -271,11 +285,13 @@ function Development() {
           <p className="text-gray-600 mb-4">
             Use hooks for local state management:
           </p>
-          <CodeBlock code={`final [count, setCount] = useState(0);
+          <CodeBlock code={`final count = useState(0);
 
 DCFButton(
-  onPress: () => setCount(count + 1),
-  child: DCFText('Count: $count'),
+  buttonProps: DCFButtonProps(title: 'Increment'),
+  onPress: (v) {
+    count.setState(count.state + 1);
+  },
 )`} />
         </Section>
       </div>
@@ -300,21 +316,38 @@ function Examples() {
           <p className="text-gray-600 mb-4">
             A simple counter app demonstrating state management:
           </p>
-          <CodeBlock code={`class CounterApp extends Component {
+          <CodeBlock code={`class CounterApp extends DCFStatefulComponent {
   @override
-  Widget build(BuildContext context) {
-    final [count, setCount] = useState(0);
+  DCFComponentNode render() {
+    final count = useState(0);
     
     return DCFView(
+      layout: DCFLayout(
+        flex: 1,
+        padding: 20,
+        justifyContent: YogaJustifyContent.center,
+        alignItems: YogaAlign.center,
+      ),
       children: [
-        DCFText('Count: $count'),
+        DCFText(
+          content: 'Count: \${count.state}',
+          textProps: DCFTextProps(
+            fontSize: 24,
+            fontWeight: DCFFontWeight.bold,
+          ),
+        ),
         DCFButton(
-          onPress: () => setCount(count + 1),
-          child: DCFText('Increment'),
+          buttonProps: DCFButtonProps(title: 'Increment'),
+          onPress: (v) {
+            count.setState(count.state + 1);
+          },
         ),
       ],
     );
   }
+  
+  @override
+  List<Object?> get props => [];
 }`} />
         </Section>
 
@@ -322,31 +355,46 @@ function Examples() {
           <p className="text-gray-600 mb-4">
             A todo list app with dynamic list rendering:
           </p>
-          <CodeBlock code={`class TodoApp extends Component {
+          <CodeBlock code={`class TodoApp extends DCFStatefulComponent {
   @override
-  Widget build(BuildContext context) {
-    final [todos, setTodos] = useState<List<String>>([]);
-    final [input, setInput] = useState('');
+  DCFComponentNode render() {
+    final todos = useState<List<String>>([]);
+    final input = useState('');
     
     return DCFView(
+      layout: DCFLayout(
+        flex: 1,
+        padding: 20,
+        gap: 10,
+      ),
       children: [
         DCFTextInput(
-          value: input,
-          onChange: setInput,
+          value: input.state,
+          onChange: (text) {
+            input.setState(text);
+          },
         ),
         DCFButton(
-          onPress: () {
-            setTodos([...todos, input]);
-            setInput('');
+          buttonProps: DCFButtonProps(title: 'Add Todo'),
+          onPress: (v) {
+            if (input.state.isNotEmpty) {
+              todos.setState([...todos.state, input.state]);
+              input.setState('');
+            }
           },
-          child: DCFText('Add'),
         ),
-        ...todos.map((todo) => 
-          DCFText(todo)
+        ...todos.state.map((todo) => 
+          DCFText(
+            content: todo,
+            textProps: DCFTextProps(fontSize: 16),
+          )
         ),
       ],
     );
   }
+  
+  @override
+  List<Object?> get props => [];
 }`} />
         </Section>
       </div>
