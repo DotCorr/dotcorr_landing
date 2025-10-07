@@ -155,17 +155,17 @@ function OpenSourceSection() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
+            <FeatureHighlight
               icon="🚀"
               title="Native Performance"
               description="Renders actual native UI components. No bridge overhead, no compromise on performance."
             />
-            <FeatureCard
+            <FeatureHighlight
               icon="⚛️"
               title="Best of Flutter DX and React"
               description="Familiar development experience with hooks, state management, and component lifecycle."
             />
-            <FeatureCard
+            <FeatureHighlight
               icon="🎨"
               title="No Abstractions"
               description="Direct access to native views. No platform views or unnecessary abstractions."
@@ -321,113 +321,192 @@ class MyApp extends DCFStatefulComponent {
 function AgencySection() {
   const [showContact, setShowContact] = useState(false);
 
-  const handleStartProject = () => {
-    setShowContact(true);
-    // Auto-hide after 5 seconds
-    setTimeout(() => setShowContact(false), 5000);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3 }}
+      className="py-20"
     >
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Dotcorr Agency
-            </span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            We build beautiful apps and websites for people. Specializing in mobile development
-            and modern web experiences.
+      {/* Hero Section */}
+      <div className="max-w-4xl mx-auto px-6 text-center mb-20">
+        <motion.h1 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-5xl md:text-6xl font-bold text-gray-900 mb-6"
+        >
+          Dotcorr Agency
+        </motion.h1>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
+        >
+          We build beautiful apps and websites that deliver exceptional user experiences.
+          From concept to launch, we bring your ideas to life.
+        </motion.p>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+        >
+          <button
+            onClick={() => setShowContact(true)}
+            className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-medium transition-colors shadow-lg hover:shadow-xl"
+          >
+            Start a Project
+          </button>
+          <a
+            href="mailto:squirelwares@gmail.com"
+            className="bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-colors"
+          >
+            Get in Touch
+          </a>
+        </motion.div>
+      </div>
+
+      {/* Services Grid */}
+      <div className="max-w-6xl mx-auto px-6 mb-20">
+        <div className="grid md:grid-cols-3 gap-8">
+          <ServiceCard
+            icon="📱"
+            title="Mobile Apps"
+            description="Native iOS and Android apps built with modern frameworks for exceptional performance and user experience."
+          />
+          <ServiceCard
+            icon="🌐"
+            title="Web Development"
+            description="Fast, responsive websites and web applications that scale with your business needs."
+          />
+          <ServiceCard
+            icon="🎨"
+            title="UI/UX Design"
+            description="Beautiful, intuitive designs that put users first and drive measurable business results."
+          />
+        </div>
+      </div>
+
+      {/* Contact Information Section */}
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="bg-gray-50 rounded-2xl p-12 border border-gray-200">
+          <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
+            Let's Build Something Great
+          </h3>
+          <p className="text-gray-600 mb-8 text-center max-w-2xl mx-auto">
+            Have a project in mind? We'd love to hear about it. Reach out and let's discuss how we can help bring your vision to life.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={handleStartProject}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <a
+              href="mailto:squirelwares@gmail.com"
+              className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors"
             >
-              Start a Project
-            </button>
-            <button
-              disabled
-              className="border border-gray-200 text-gray-400 px-8 py-3 rounded-lg font-medium cursor-not-allowed opacity-60"
-              title="Coming Soon"
+              <span className="text-2xl">📧</span>
+              <div>
+                <div className="text-sm text-gray-500">Email</div>
+                <div className="font-medium">squirelwares@gmail.com</div>
+              </div>
+            </a>
+            <a
+              href="https://x.com/squirelBoy360"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors"
             >
-              View Portfolio
-            </button>
+              <span className="text-2xl">𝕏</span>
+              <div>
+                <div className="text-sm text-gray-500">Twitter/X</div>
+                <div className="font-medium">@squirelBoy360</div>
+              </div>
+            </a>
           </div>
+        </div>
+      </div>
 
-          {/* Contact Toast */}
-          <AnimatePresence>
-            {showContact && (
-              <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className="fixed top-20 right-4 bg-white border border-gray-200 rounded-lg shadow-lg p-6 z-50 max-w-sm"
+      {/* Contact Toast */}
+      <AnimatePresence>
+        {showContact && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-20 right-4 bg-white border border-gray-200 rounded-xl shadow-2xl p-6 z-50 max-w-sm"
+          >
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">Contact Information</h3>
+              <button
+                onClick={() => setShowContact(false)}
+                className="text-gray-400 hover:text-gray-600 transition-colors text-xl leading-none"
               >
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-semibold text-gray-900">Get in Touch</h3>
-                  <button
-                    onClick={() => setShowContact(false)}
-                    className="text-gray-400 hover:text-gray-600 transition-colors"
-                  >
-                    ×
-                  </button>
+                ×
+              </button>
+            </div>
+            <div className="space-y-4">
+              <a
+                href="mailto:squirelwares@gmail.com"
+                className="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-50"
+              >
+                <span className="text-xl">📧</span>
+                <div>
+                  <div className="text-xs text-gray-500">Email</div>
+                  <div className="text-sm font-medium">squirelwares@gmail.com</div>
                 </div>
-                <div className="space-y-3">
-                  <a
-                    href="mailto:squirelwares@gmail.com"
-                    className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors"
-                  >
-                    <span>📧</span>
-                    <span className="text-sm">squirelwares@gmail.com</span>
-                  </a>
-                  <a
-                    href="https://x.com/squirelBoy360"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors"
-                  >
-                    <span>🐦</span>
-                    <span className="text-sm">@squirelBoy360</span>
-                  </a>
+              </a>
+              <a
+                href="https://x.com/squirelBoy360"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors p-2 rounded-lg hover:bg-gray-50"
+              >
+                <span className="text-xl">𝕏</span>
+                <div>
+                  <div className="text-xs text-gray-500">Twitter/X</div>
+                  <div className="text-sm font-medium">@squirelBoy360</div>
                 </div>
-                <p className="text-xs text-gray-500 mt-4">
-                  Reach out to discuss your project needs!
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      </section>
+              </a>
+            </div>
+            <p className="text-xs text-gray-500 mt-4 pt-4 border-t border-gray-100">
+              We typically respond within 24 hours
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+}
 
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
-            <FeatureCard
-              icon="📱"
-              title="Mobile Apps"
-              description="Native iOS and Android apps built with modern frameworks and best practices."
-            />
-            <FeatureCard
-              icon="🌐"
-              title="Web Development"
-              description="Fast, responsive websites and web applications that deliver exceptional user experiences."
-            />
-            <FeatureCard
-              icon="🎨"
-              title="UI/UX Design"
-              description="Beautiful, intuitive designs that put users first and drive business results."
-            />
-          </div>
-        </div>
-      </section>
+function ServiceCard({ icon, title, description }: { icon: string; title: string; description: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-all duration-300"
+    >
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
+    </motion.div>
+  );
+}
+
+function FeatureHighlight({ icon, title, description }: { icon: string; title: string; description: string }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+      className="bg-white border border-gray-200 rounded-2xl p-8 hover:shadow-lg transition-all duration-300"
+    >
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+      <p className="text-gray-600 leading-relaxed">{description}</p>
     </motion.div>
   );
 }
@@ -625,19 +704,6 @@ function DeviceCard({ icon, label, color }: { icon: React.ReactNode; label: stri
     >
       {icon}
       <span className="font-medium text-gray-700">{label}</span>
-    </motion.div>
-  );
-}
-
-function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
-  return (
-    <motion.div
-      whileHover={{ y: -5 }}
-      className="bg-white p-6 rounded-xl shadow-lg border border-gray-100"
-    >
-      <div className="text-3xl mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-3">{title}</h3>
-      <p className="text-gray-600">{description}</p>
     </motion.div>
   );
 }
