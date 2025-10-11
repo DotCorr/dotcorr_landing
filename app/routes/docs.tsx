@@ -18,16 +18,16 @@ export default function Docs() {
   return (
     <div className="min-h-screen bg-white">
       <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 z-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
           <div className="relative flex items-center justify-center h-16">
-            <Link to="/" className="absolute left-0 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+            <Link to="/" className="absolute left-4 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
               <ArrowLeft size={20} />
               <span className="text-sm font-medium">Back</span>
             </Link>
             <h1 className="text-xl font-bold text-gray-900">Documentation</h1>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden absolute right-0 p-2 text-gray-600 hover:text-gray-900 transition-colors"
+              className="lg:hidden absolute right-4 p-2 text-gray-600 hover:text-gray-900 transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}

@@ -48,9 +48,9 @@ export default function Home() {
 
       <AnimatePresence mode="wait">
         {activeSection === 'opensource' ? (
-          <OpenSourceSection key="opensource" />
+          <OpenSourceSection key="opensource" setActiveSection={setActiveSection} />
         ) : (
-          <AgencySection key="agency" />
+          <AgencySection key="agency" setActiveSection={setActiveSection} />
         )}
       </AnimatePresence>
 
@@ -94,7 +94,7 @@ export default function Home() {
   );
 }
 
-function OpenSourceSection() {
+function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: 'opensource' | 'agency') => void }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -141,6 +141,26 @@ function OpenSourceSection() {
               </a>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Agency CTA Banner */}
+      <section className="py-4 px-6 lg:px-8 bg-gradient-to-r from-blue-50 to-purple-50 border-y border-blue-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-center sm:text-left">
+              <p className="text-gray-900 font-medium">
+                🚀 <span className="font-semibold">Need a team to build your app?</span>
+                <span className="text-gray-600 ml-2">Let our experts handle it from start to finish.</span>
+              </p>
+            </div>
+            <button
+              onClick={() => setActiveSection('agency')}
+              className="shrink-0 bg-gray-900 hover:bg-gray-800 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all hover:scale-105 shadow-md"
+            >
+              Hire Our Agency
+            </button>
+          </div>
         </div>
       </section>
 
@@ -314,11 +334,39 @@ class MyApp extends DCFStatefulComponent {
           </div>
         </div>
       </section>
+
+      {/* CTA Section - Drive to Agency */}
+      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold text-gray-900 mb-6">
+            Don't Have Time to Build It Yourself?
+          </h2>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            Focus on your business while our expert team brings your app idea to life. 
+            From design to deployment, we handle everything.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => setActiveSection('agency')}
+              className="inline-flex items-center justify-center bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-medium transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              <span className="mr-2">🚀</span>
+              Hire Our Agency
+            </button>
+            <Link
+              to="/docs"
+              className="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-colors"
+            >
+              Continue Building
+            </Link>
+          </div>
+        </div>
+      </section>
     </motion.div>
   );
 }
 
-function AgencySection() {
+function AgencySection({ setActiveSection }: { setActiveSection: (section: 'opensource' | 'agency') => void }) {
   const [showContact, setShowContact] = useState(false);
 
   return (
@@ -354,15 +402,18 @@ function AgencySection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <button
-            onClick={() => setShowContact(true)}
-            className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-medium transition-colors shadow-lg hover:shadow-xl"
+          <a
+            href="https://docs.google.com/forms/d/e/1FAIpQLSeknB0l7UPIJRBoIm5ab8w9BdoUz8gWoMfgyPzdftvioJV2iw/viewform?usp=dialog"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-medium transition-colors shadow-lg hover:shadow-xl inline-flex items-center justify-center gap-2"
           >
-            Start a Project
-          </button>
+            <span>Join Waitlist</span>
+            <ExternalLink size={18} />
+          </a>
           <a
             href="mailto:squirelwares@gmail.com"
-            className="bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-colors"
+            className="bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-colors inline-flex items-center justify-center"
           >
             Get in Touch
           </a>
@@ -392,21 +443,38 @@ function AgencySection() {
 
       {/* Contact Information Section */}
       <div className="max-w-4xl mx-auto px-6">
-        <div className="bg-gray-50 rounded-2xl p-12 border border-gray-200">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">
-            Let's Build Something Great
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-12 text-white shadow-2xl">
+          <h3 className="text-3xl font-bold mb-4 text-center">
+            Ready to Start Your Project?
           </h3>
-          <p className="text-gray-600 mb-8 text-center max-w-2xl mx-auto">
-            Have a project in mind? We'd love to hear about it. Reach out and let's discuss how we can help bring your vision to life.
+          <p className="text-gray-300 mb-8 text-center max-w-2xl mx-auto">
+            Join our waitlist and be the first to get access to exclusive project slots and early bird pricing.
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
+          <div className="flex flex-col gap-4 max-w-md mx-auto mb-8">
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSeknB0l7UPIJRBoIm5ab8w9BdoUz8gWoMfgyPzdftvioJV2iw/viewform?usp=dialog"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white hover:bg-gray-100 text-gray-900 px-8 py-4 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-lg text-center inline-flex items-center justify-center gap-2"
+            >
+              <span>🎯 Join the Waitlist</span>
+              <ExternalLink size={18} />
+            </a>
             <a
               href="mailto:squirelwares@gmail.com"
-              className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors"
+              className="bg-transparent hover:bg-white/10 text-white border-2 border-white/30 hover:border-white/50 px-8 py-4 rounded-xl font-medium transition-colors text-center"
+            >
+              📧 Email Us Directly
+            </a>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center pt-6 border-t border-white/20">
+            <a
+              href="mailto:squirelwares@gmail.com"
+              className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors justify-center"
             >
               <span className="text-2xl">📧</span>
-              <div>
-                <div className="text-sm text-gray-500">Email</div>
+              <div className="text-left">
+                <div className="text-sm text-gray-400">Email</div>
                 <div className="font-medium">squirelwares@gmail.com</div>
               </div>
             </a>
@@ -414,11 +482,11 @@ function AgencySection() {
               href="https://x.com/squirelBoy360"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 text-gray-700 hover:text-gray-900 transition-colors"
+              className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors justify-center"
             >
               <span className="text-2xl">𝕏</span>
-              <div>
-                <div className="text-sm text-gray-500">Twitter/X</div>
+              <div className="text-left">
+                <div className="text-sm text-gray-400">Twitter/X</div>
                 <div className="font-medium">@squirelBoy360</div>
               </div>
             </a>
