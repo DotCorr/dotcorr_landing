@@ -109,8 +109,77 @@ function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: '
       className="pt-16"
     >
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="min-h-screen flex items-center justify-center px-6 lg:px-8 relative overflow-hidden">
+        {/* Background Device Frames - Blended */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* iOS Frame - Left */}
+          <motion.div
+            initial={{ opacity: 0, x: -100, rotate: -15 }}
+            animate={{ opacity: 0.08, x: 0, rotate: -12 }}
+            transition={{ duration: 1.5, delay: 0.3 }}
+            className="absolute left-[-10%] top-[15%] w-[280px] h-[560px]"
+          >
+            <div className="relative w-full h-full bg-gray-900 rounded-[50px] shadow-2xl p-3">
+              {/* Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[25px] bg-gray-900 rounded-b-3xl z-10" />
+              {/* Screen */}
+              <div className="w-full h-full bg-white rounded-[40px] overflow-hidden">
+                <div className="h-full bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
+                  <div className="text-gray-400 font-mono text-xs">iOS</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Android Frame - Right */}
+          <motion.div
+            initial={{ opacity: 0, x: 100, rotate: 15 }}
+            animate={{ opacity: 0.08, x: 0, rotate: 12 }}
+            transition={{ duration: 1.5, delay: 0.5 }}
+            className="absolute right-[-10%] top-[20%] w-[280px] h-[560px]"
+          >
+            <div className="relative w-full h-full bg-gray-800 rounded-[40px] shadow-2xl p-2">
+              {/* Screen */}
+              <div className="w-full h-full bg-white rounded-[32px] overflow-hidden">
+                <div className="h-full bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
+                  <div className="text-gray-400 font-mono text-xs">Android</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Web Browser Frame - Bottom Center */}
+          <motion.div
+            initial={{ opacity: 0, y: 100, scale: 0.9 }}
+            animate={{ opacity: 0.06, y: 0, scale: 1 }}
+            transition={{ duration: 1.5, delay: 0.7 }}
+            className="absolute left-1/2 -translate-x-1/2 bottom-[5%] w-[600px] h-[400px]"
+          >
+            <div className="relative w-full h-full bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
+              {/* Browser Chrome */}
+              <div className="h-10 bg-gray-800 flex items-center px-4 gap-2">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/50" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+                  <div className="w-3 h-3 rounded-full bg-green-500/50" />
+                </div>
+                <div className="flex-1 bg-gray-700/50 h-6 rounded mx-4" />
+              </div>
+              {/* Screen */}
+              <div className="h-[calc(100%-40px)] bg-white">
+                <div className="h-full bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+                  <div className="text-gray-400 font-mono text-xs">Web</div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Gradient Overlay for extra blending */}
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
+        </div>
+
+        {/* Content */}
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
