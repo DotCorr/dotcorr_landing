@@ -1,11 +1,16 @@
 import type { Route } from "./+types/home";
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Github, ExternalLink, Coffee, FileText } from "lucide-react";
 import { Link } from "react-router";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState<'opensource' | 'agency'>('opensource');
+  const { scrollY } = useScroll();
+  
+  // Animate device frames out as user scrolls
+  const deviceOpacity = useTransform(scrollY, [0, 400], [1, 0]);
+  const deviceScale = useTransform(scrollY, [0, 400], [1, 0.95]);
 
   return (
     <div className="min-h-screen">
@@ -53,7 +58,7 @@ export default function Home() {
 
       <AnimatePresence mode="wait">
         {activeSection === 'opensource' ? (
-          <OpenSourceSection key="opensource" setActiveSection={setActiveSection} />
+          <OpenSourceSection key="opensource" setActiveSection={setActiveSection} deviceOpacity={deviceOpacity} deviceScale={deviceScale} />
         ) : (
           <AgencySection key="agency" setActiveSection={setActiveSection} />
         )}
@@ -99,7 +104,15 @@ export default function Home() {
   );
 }
 
-function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: 'opensource' | 'agency') => void }) {
+function OpenSourceSection({ 
+  setActiveSection, 
+  deviceOpacity, 
+  deviceScale 
+}: { 
+  setActiveSection: (section: 'opensource' | 'agency') => void;
+  deviceOpacity: MotionValue<number>;
+  deviceScale: MotionValue<number>;
+}) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -111,13 +124,16 @@ function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: '
       {/* Hero Section */}
       <section className="min-h-screen flex items-center justify-center px-6 lg:px-8 relative overflow-hidden">
         {/* Background Device Frames - Blended */}
-        <div className="absolute inset-0 pointer-events-none">
+        <motion.div 
+          className="absolute inset-0 pointer-events-none"
+          style={{ opacity: deviceOpacity, scale: deviceScale }}
+        >
           {/* iOS Frame - Left */}
           <motion.div
             initial={{ opacity: 0, x: -100, rotate: -15 }}
             animate={{ opacity: 0.08, x: 0, rotate: -12 }}
             transition={{ duration: 1.5, delay: 0.3 }}
-            className="absolute left-[-10%] top-[15%] w-[280px] h-[560px]"
+            className="absolute left-[-5%] top-[20%] w-[260px] h-[520px]"
           >
             <div className="relative w-full h-full bg-gray-900 rounded-[50px] shadow-2xl p-3">
               {/* Notch */}
@@ -136,7 +152,7 @@ function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: '
             initial={{ opacity: 0, x: 100, rotate: 15 }}
             animate={{ opacity: 0.08, x: 0, rotate: 12 }}
             transition={{ duration: 1.5, delay: 0.5 }}
-            className="absolute right-[-10%] top-[20%] w-[280px] h-[560px]"
+            className="absolute right-[-5%] top-[25%] w-[260px] h-[520px]"
           >
             <div className="relative w-full h-full bg-gray-800 rounded-[40px] shadow-2xl p-2">
               {/* Screen */}
@@ -150,10 +166,10 @@ function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: '
 
           {/* Web Browser Frame - Bottom Center */}
           <motion.div
-            initial={{ opacity: 0, y: 100, scale: 0.9 }}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 0.06, y: 0, scale: 1 }}
             transition={{ duration: 1.5, delay: 0.7 }}
-            className="absolute left-1/2 -translate-x-1/2 bottom-[5%] w-[600px] h-[400px]"
+            className="absolute left-1/2 -translate-x-1/2 bottom-[15%] w-[500px] h-[300px] hidden lg:block"
           >
             <div className="relative w-full h-full bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
               {/* Browser Chrome */}
@@ -176,7 +192,7 @@ function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: '
 
           {/* Gradient Overlay for extra blending */}
           <div className="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white" />
-        </div>
+        </motion.div>
 
         {/* Content */}
         <div className="max-w-4xl mx-auto text-center relative z-10">
