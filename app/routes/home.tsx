@@ -167,24 +167,26 @@ function OpenSourceSection({
           {/* Web Browser Frame - Bottom Center */}
           <motion.div
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            animate={{ opacity: 0.06, y: 0, scale: 1 }}
+            animate={{ opacity: 0.15, y: 0, scale: 1 }}
             transition={{ duration: 1.5, delay: 0.7 }}
-            className="absolute left-1/2 -translate-x-1/2 bottom-[15%] w-[500px] h-[300px] hidden lg:block"
+            className="absolute left-1/2 -translate-x-1/2 top-[60%] w-[420px] min-h-[260px] hidden lg:block"
           >
-            <div className="relative w-full h-full bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="relative w-full h-[260px] bg-gray-900 rounded-xl shadow-2xl overflow-hidden border-4 border-gray-800">
               {/* Browser Chrome */}
-              <div className="h-10 bg-gray-800 flex items-center px-4 gap-2">
-                <div className="flex gap-2">
-                  <div className="w-3 h-3 rounded-full bg-red-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/50" />
+              <div className="h-10 bg-gray-800 flex items-center px-3 gap-2 flex-shrink-0 border-b border-gray-700">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-red-500" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
                 </div>
-                <div className="flex-1 bg-gray-700/50 h-6 rounded mx-4" />
+                <div className="flex-1 bg-gray-700 h-6 rounded mx-3 flex items-center px-2">
+                  <div className="text-gray-400 text-[10px]">localhost:3000</div>
+                </div>
               </div>
               {/* Screen */}
-              <div className="h-[calc(100%-40px)] bg-white">
-                <div className="h-full bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
-                  <div className="text-gray-400 font-mono text-xs">Web</div>
+              <div className="h-[222px] bg-white">
+                <div className="h-full bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+                  <div className="text-gray-500 font-mono text-sm font-semibold">Web Browser</div>
                 </div>
               </div>
             </div>
