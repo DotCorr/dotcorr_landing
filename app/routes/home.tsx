@@ -211,7 +211,7 @@ function OpenSourceSection({
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
-              DCFlight is a revolutionary framework that renders true native UI components. 
+              DCFlight is a cross-platform framework that renders actual native UI components in one codebase, DART. 
               No platform views. No abstractions. Just pure native performance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
