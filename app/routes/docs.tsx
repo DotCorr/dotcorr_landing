@@ -1,13 +1,19 @@
 import type { Route } from "./+types/docs";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router";
-import { ArrowLeft, Book, Code, Box, Wrench, FileCode } from "lucide-react";
+import { ArrowLeft, Book, Code, Box, Wrench, FileCode, Menu, X } from "lucide-react";
 
 type DocSection = 'getting-started' | 'architecture' | 'components' | 'development' | 'examples';
 
 export default function Docs() {
   const [activeSection, setActiveSection] = useState<DocSection>('getting-started');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleSectionChange = (section: DocSection) => {
+    setActiveSection(section);
+    setIsMobileMenuOpen(false); // Close mobile menu when section changes
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -20,47 +26,75 @@ export default function Docs() {
               <span className="text-sm font-medium">Back</span>
             </Link>
             <h1 className="text-xl font-bold text-gray-900">Documentation</h1>
-            <div className="w-20"></div>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+            <div className="hidden lg:block w-20"></div>
           </div>
         </div>
       </nav>
 
       <div className="flex pt-16">
-        {/* Sidebar */}
-        <aside className="hidden lg:block w-64 border-r border-gray-200 h-[calc(100vh-4rem)] sticky top-16 bg-white">
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Sidebar - Mobile & Desktop */}
+        <motion.aside
+          initial={false}
+          animate={{
+            x: isMobileMenuOpen ? 0 : '-100%'
+          }}
+          transition={{ type: "spring", damping: 25, stiffness: 200 }}
+          className="fixed lg:sticky top-16 left-0 w-64 border-r border-gray-200 h-[calc(100vh-4rem)] bg-white z-50 lg:translate-x-0 overflow-y-auto"
+        >
           <nav className="p-6 space-y-1">
             <SidebarItem
               icon={<Book size={18} />}
               title="Getting Started"
               isActive={activeSection === 'getting-started'}
-              onClick={() => setActiveSection('getting-started')}
+              onClick={() => handleSectionChange('getting-started')}
             />
             <SidebarItem
               icon={<Box size={18} />}
               title="Architecture"
               isActive={activeSection === 'architecture'}
-              onClick={() => setActiveSection('architecture')}
+              onClick={() => handleSectionChange('architecture')}
             />
             <SidebarItem
               icon={<Code size={18} />}
               title="Components"
               isActive={activeSection === 'components'}
-              onClick={() => setActiveSection('components')}
+              onClick={() => handleSectionChange('components')}
             />
             <SidebarItem
               icon={<Wrench size={18} />}
               title="Development"
               isActive={activeSection === 'development'}
-              onClick={() => setActiveSection('development')}
+              onClick={() => handleSectionChange('development')}
             />
             <SidebarItem
               icon={<FileCode size={18} />}
               title="Examples"
               isActive={activeSection === 'examples'}
-              onClick={() => setActiveSection('examples')}
+              onClick={() => handleSectionChange('examples')}
             />
           </nav>
-        </aside>
+        </motion.aside>
 
         {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
