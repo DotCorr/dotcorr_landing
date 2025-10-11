@@ -1,6 +1,6 @@
 import type { Route } from "./+types/home";
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Github, ExternalLink, Coffee, FileText } from "lucide-react";
 import { Link } from "react-router";
 
@@ -14,7 +14,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-8">
-              <Link to="/" className="text-xl font-bold text-gray-900 tracking-tight">DCFlight</Link>
+              <button 
+                onClick={() => setActiveSection('opensource')}
+                className="text-xl font-bold text-gray-900 tracking-tight hover:opacity-80 transition-opacity"
+              >
+                DCFlight
+              </button>
               <div className="hidden md:flex items-center gap-6">
                 <Link to="/docs" className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors">Docs</Link>
                 <Link to="/roadmap" className="text-gray-600 hover:text-gray-900 text-sm font-medium transition-colors">Roadmap</Link>
@@ -141,26 +146,6 @@ function OpenSourceSection({ setActiveSection }: { setActiveSection: (section: '
               </a>
             </div>
           </motion.div>
-        </div>
-      </section>
-
-      {/* Agency CTA Banner */}
-      <section className="py-4 px-6 lg:px-8 bg-gradient-to-r from-blue-50 to-purple-50 border-y border-blue-100">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="text-center sm:text-left">
-              <p className="text-gray-900 font-medium">
-                🚀 <span className="font-semibold">Need a team to build your app?</span>
-                <span className="text-gray-600 ml-2">Let our experts handle it from start to finish.</span>
-              </p>
-            </div>
-            <button
-              onClick={() => setActiveSection('agency')}
-              className="shrink-0 bg-gray-900 hover:bg-gray-800 text-white px-6 py-2.5 rounded-full text-sm font-medium transition-all hover:scale-105 shadow-md"
-            >
-              Hire Our Agency
-            </button>
-          </div>
         </div>
       </section>
 
@@ -320,6 +305,9 @@ class MyApp extends DCFStatefulComponent {
         </div>
       </section>
 
+      {/* Scroll-Triggered Typewriter CTA */}
+      <ScrollTypewriterCTA setActiveSection={setActiveSection} />
+
       {/* Under Development Notice */}
       <section className="py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -331,34 +319,6 @@ class MyApp extends DCFStatefulComponent {
             <p className="text-yellow-600">
               Contributions are welcomed! Help us build the future of cross-platform development.
             </p>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section - Drive to Agency */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">
-            Don't Have Time to Build It Yourself?
-          </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Focus on your business while our expert team brings your app idea to life. 
-            From design to deployment, we handle everything.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => setActiveSection('agency')}
-              className="inline-flex items-center justify-center bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-xl font-medium transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
-            >
-              <span className="mr-2">🚀</span>
-              Hire Our Agency
-            </button>
-            <Link
-              to="/docs"
-              className="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-gray-900 px-8 py-4 rounded-xl font-medium border border-gray-300 hover:border-gray-400 transition-colors"
-            >
-              Continue Building
-            </Link>
           </div>
         </div>
       </section>
@@ -544,6 +504,146 @@ function AgencySection({ setActiveSection }: { setActiveSection: (section: 'open
         )}
       </AnimatePresence>
     </motion.div>
+  );
+}
+
+function ScrollTypewriterCTA({ setActiveSection }: { setActiveSection: (section: 'opensource' | 'agency') => void }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [text, setText] = useState("");
+  const [showButton, setShowButton] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [hasTriggered, setHasTriggered] = useState(false);
+  const fullText = "Need a website or app built for you?";
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const isScrollingUp = currentScrollY < lastScrollY;
+      
+      // Trigger when user scrolls UP after being past 50% of the page
+      if (isScrollingUp && currentScrollY > windowHeight * 0.5 && !hasTriggered) {
+        setIsVisible(true);
+        setHasTriggered(true);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY, hasTriggered]);
+
+  useEffect(() => {
+    if (isVisible && text.length < fullText.length) {
+      const timeout = setTimeout(() => {
+        setText(fullText.slice(0, text.length + 1));
+      }, 50); // Typewriter speed
+      return () => clearTimeout(timeout);
+    } else if (isVisible && text.length === fullText.length && !showButton) {
+      const timeout = setTimeout(() => setShowButton(true), 300);
+      return () => clearTimeout(timeout);
+    }
+  }, [isVisible, text, fullText, showButton]);
+
+  if (!isVisible) return null;
+
+  return (
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="py-20 px-6 lg:px-8 relative overflow-hidden"
+    >
+      {/* Soft gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-blue-50/30 to-pink-50/50 backdrop-blur-3xl" />
+      
+      <div className="max-w-4xl mx-auto relative z-10">
+        <div className="text-center">
+          {/* Typewriter text */}
+          <motion.h2 
+            className="text-4xl md:text-5xl lg:text-6xl font-light text-gray-800 mb-8 min-h-[120px] flex items-center justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="font-serif italic">
+              {text}
+              <motion.span
+                animate={{ opacity: [1, 0, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+                className="inline-block w-1 h-12 bg-gray-800 ml-1 align-middle"
+              />
+            </span>
+          </motion.h2>
+
+          {/* Subtitle fades in */}
+          <AnimatePresence>
+            {text.length === fullText.length && (
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-xl text-gray-600 mb-10 max-w-2xl mx-auto font-light"
+              >
+                From design to deployment, let our team bring your ideas to life.
+              </motion.p>
+            )}
+          </AnimatePresence>
+
+          {/* Button appears with soft bounce */}
+          <AnimatePresence>
+            {showButton && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ 
+                  type: "spring",
+                  stiffness: 200,
+                  damping: 15,
+                  duration: 0.6 
+                }}
+              >
+                <button
+                  onClick={() => {
+                    setActiveSection('agency');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="group relative inline-flex items-center gap-3 bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-700 text-white px-10 py-5 rounded-full text-lg font-medium transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-105"
+                >
+                  <span className="relative z-10">Yes, let's talk</span>
+                  <motion.span
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                    className="relative z-10"
+                  >
+                    →
+                  </motion.span>
+                  
+                  {/* Soft glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/20 to-blue-500/20 blur-xl group-hover:blur-2xl transition-all duration-300" />
+                </button>
+
+                {/* Optional: "No thanks" link */}
+                <motion.button
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                  onClick={() => setIsVisible(false)}
+                  className="block mt-6 text-sm text-gray-500 hover:text-gray-700 transition-colors mx-auto underline decoration-dotted"
+                >
+                  No thanks, I'll explore the framework
+                </motion.button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Decorative elements */}
+      <div className="absolute top-10 left-10 w-20 h-20 bg-purple-200/30 rounded-full blur-3xl" />
+      <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-200/30 rounded-full blur-3xl" />
+    </motion.section>
   );
 }
 
