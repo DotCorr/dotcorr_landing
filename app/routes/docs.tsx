@@ -12,34 +12,31 @@ export default function Docs() {
 
   const handleSectionChange = (section: DocSection) => {
     setActiveSection(section);
-    setIsMobileMenuOpen(false); // Close mobile menu when section changes
+    setIsMobileMenuOpen(false);
   };
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-lg border-b border-gray-200/50 z-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link to="/" className="flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
+          <div className="relative flex items-center justify-center h-16">
+            <Link to="/" className="absolute left-0 flex items-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
               <ArrowLeft size={20} />
               <span className="text-sm font-medium">Back</span>
             </Link>
             <h1 className="text-xl font-bold text-gray-900">Documentation</h1>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-gray-600 hover:text-gray-900 transition-colors"
+              className="lg:hidden absolute right-0 p-2 text-gray-600 hover:text-gray-900 transition-colors"
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
-            <div className="hidden lg:block w-20"></div>
           </div>
         </div>
       </nav>
 
       <div className="flex pt-16">
-        {/* Mobile Menu Overlay */}
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
@@ -53,14 +50,50 @@ export default function Docs() {
           )}
         </AnimatePresence>
 
-        {/* Sidebar - Mobile & Desktop */}
+        {/* Desktop Sidebar - Always visible on large screens */}
+        <aside className="hidden lg:block sticky top-16 left-0 w-64 border-r border-gray-200 h-[calc(100vh-4rem)] bg-white overflow-y-auto">
+          <nav className="p-6 space-y-1">
+            <SidebarItem
+              icon={<Book size={18} />}
+              title="Getting Started"
+              isActive={activeSection === 'getting-started'}
+              onClick={() => handleSectionChange('getting-started')}
+            />
+            <SidebarItem
+              icon={<Box size={18} />}
+              title="Architecture"
+              isActive={activeSection === 'architecture'}
+              onClick={() => handleSectionChange('architecture')}
+            />
+            <SidebarItem
+              icon={<Code size={18} />}
+              title="Components"
+              isActive={activeSection === 'components'}
+              onClick={() => handleSectionChange('components')}
+            />
+            <SidebarItem
+              icon={<Wrench size={18} />}
+              title="Development"
+              isActive={activeSection === 'development'}
+              onClick={() => handleSectionChange('development')}
+            />
+            <SidebarItem
+              icon={<FileCode size={18} />}
+              title="Examples"
+              isActive={activeSection === 'examples'}
+              onClick={() => handleSectionChange('examples')}
+            />
+          </nav>
+        </aside>
+
+        {/* Mobile Sidebar - Slides in from left */}
         <motion.aside
           initial={false}
           animate={{
             x: isMobileMenuOpen ? 0 : '-100%'
           }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="fixed lg:sticky top-16 left-0 w-64 border-r border-gray-200 h-[calc(100vh-4rem)] bg-white z-50 lg:translate-x-0 overflow-y-auto"
+          className="lg:hidden fixed top-16 left-0 w-64 border-r border-gray-200 h-[calc(100vh-4rem)] bg-white z-50 overflow-y-auto"
         >
           <nav className="p-6 space-y-1">
             <SidebarItem
@@ -96,7 +129,6 @@ export default function Docs() {
           </nav>
         </motion.aside>
 
-        {/* Main Content */}
         <main className="flex-1 overflow-y-auto">
           <div className="max-w-4xl mx-auto px-6 lg:px-12 py-12">
             {activeSection === 'getting-started' && <GettingStarted />}
@@ -141,29 +173,39 @@ function GettingStarted() {
     >
       <h2 className="text-4xl font-bold text-gray-900 mb-6">Getting Started</h2>
       <p className="text-lg text-gray-600 mb-12">
-        Get up and running with DCFlight in minutes. Follow these steps to create your first cross-platform app.
+        The DCFlight CLI is your primary tool for creating, running, and managing DCFlight projects. Here's how to get started:
       </p>
 
       <div className="space-y-12">
-        <Section title="Installation">
-          <p className="text-gray-600 mb-4">
-            Install the DCFlight CLI globally using pub:
-          </p>
-          <CodeBlock code="dart pub global activate dcflight_cli" />
+        <Section title="Install the DCFlight CLI">
+          <p className="text-gray-600 mb-4">Install globally using Dart:</p>
+          <CodeBlock code="dart pub global activate dcflight_cli"/>
+          <p className="text-gray-600 mt-4">Verify installation:</p>
+          <CodeBlock code="dcf --help"/>
         </Section>
 
-        <Section title="Create Your First App">
-          <p className="text-gray-600 mb-4">
-            Create a new DCFlight project:
-          </p>
-          <CodeBlock code="dcflight create my_app\ncd my_app" />
+        <Section title="Create a New Project">
+          <p className="text-gray-600 mb-4">Create a new DCFlight app:</p>
+          <CodeBlock code={"dcf create app my_app\ncd my_app"}/>
         </Section>
 
-        <Section title="Run on iOS">
-          <p className="text-gray-600 mb-4">
-            Start the development server and run on iOS:
-          </p>
-          <CodeBlock code="dcflight run ios" />
+        <Section title="Run Your App">
+          <p className="text-gray-600 mb-4">Start the development server with hot reload:</p>
+          <CodeBlock code="dcf go"/>
+          <p className="text-gray-600 mt-4">Other useful options:</p>
+          <CodeBlock code={"dcf go --verbose      # Verbose output\ndcf go --no-hot-reload # Disable hot reload\ndcf go --dcf-args=\"--debug\" # Pass Flutter args"}/>
+        </Section>
+
+        <Section title="Add & Remove Packages">
+          <p className="text-gray-600 mb-4">Add dependencies to your project:</p>
+          <CodeBlock code={"dcf inject dio\n# Add as dev dependency\ndcf inject lints --dev"}/>
+          <p className="text-gray-600 mt-4">Remove unused packages:</p>
+          <CodeBlock code={"dcf eject dio\ndcf eject lints --dev"}/>
+        </Section>
+
+        <Section title="Help & Troubleshooting">
+          <p className="text-gray-600 mb-4">Show all CLI commands and options:</p>
+          <CodeBlock code={"dcf --help\ndcf go --help\ndcf inject --help\ndcf eject --help\ndcf create --help"}/>
         </Section>
       </div>
     </motion.div>
@@ -207,24 +249,7 @@ function Architecture() {
           <p className="text-gray-600 mb-4">
             Components are the building blocks of DCFlight apps. Each component manages its own state and renders to native views.
           </p>
-          <CodeBlock code={`class MyComponent extends DCFStatefulComponent {
-  @override
-  DCFComponentNode render() {
-    return DCFView(
-      children: [
-        DCFText(
-          content: 'Hello, DCFlight!',
-          textProps: DCFTextProps(
-            fontSize: 16,
-          ),
-        ),
-      ],
-    );
-  }
-  
-  @override
-  List<Object?> get props => [];
-}`} />
+          <CodeBlock code={"class MyComponent extends DCFStatefulComponent {\n  @override\n  DCFComponentNode render() {\n    return DCFView(\n      children: [\n        DCFText(\n          content: 'Hello, DCFlight!',\n          textProps: DCFTextProps(\n            fontSize: 16,\n          ),\n        ),\n      ],\n    );\n  }\n  \n  @override\n  List<Object?> get props => [];\n}"} />
         </Section>
 
         <Section title="Hot Restart">
@@ -265,23 +290,7 @@ function Components() {
           <p className="text-gray-600 mb-4">
             DCFlight uses the Yoga layout engine, providing flexbox-like layout capabilities:
           </p>
-          <CodeBlock code={`DCFView(
-  layout: DCFLayout(
-    flexDirection: YogaFlexDirection.row,
-    justifyContent: YogaJustifyContent.spaceBetween,
-    padding: 16,
-  ),
-  children: [
-    DCFText(
-      content: 'Left',
-      textProps: DCFTextProps(fontSize: 16),
-    ),
-    DCFText(
-      content: 'Right',
-      textProps: DCFTextProps(fontSize: 16),
-    ),
-  ],
-)`} />
+          <CodeBlock code={"DCFView(\n  layout: DCFLayout(\n    flexDirection: YogaFlexDirection.row,\n    justifyContent: YogaJustifyContent.spaceBetween,\n    padding: 16,\n  ),\n  children: [\n    DCFText(\n      content: 'Left',\n      textProps: DCFTextProps(fontSize: 16),\n    ),\n    DCFText(\n      content: 'Right',\n      textProps: DCFTextProps(fontSize: 16),\n    ),\n  ],\n)"} />
         </Section>
       </div>
     </motion.div>
@@ -305,28 +314,14 @@ function Development() {
           <p className="text-gray-600 mb-4">
             A typical DCFlight project structure:
           </p>
-          <CodeBlock code={`my_app/
-  lib/
-    main.dart
-    components/
-    screens/
-  ios/
-  android/
-  pubspec.yaml`} />
+          <CodeBlock code={"my_app/\n  lib/\n    main.dart\n    components/\n    screens/\n  ios/\n  android/\n  pubspec.yaml"} />
         </Section>
 
         <Section title="State Management">
           <p className="text-gray-600 mb-4">
             Use hooks for local state management:
           </p>
-          <CodeBlock code={`final count = useState(0);
-
-DCFButton(
-  buttonProps: DCFButtonProps(title: 'Increment'),
-  onPress: (v) {
-    count.setState(count.state + 1);
-  },
-)`} />
+          <CodeBlock code={"final count = useState(0);\n\nDCFButton(\n  buttonProps: DCFButtonProps(title: 'Increment'),\n  onPress: (v) {\n    count.setState(count.state + 1);\n  },\n)"} />
         </Section>
       </div>
     </motion.div>
@@ -350,86 +345,14 @@ function Examples() {
           <p className="text-gray-600 mb-4">
             A simple counter app demonstrating state management:
           </p>
-          <CodeBlock code={`class CounterApp extends DCFStatefulComponent {
-  @override
-  DCFComponentNode render() {
-    final count = useState(0);
-    
-    return DCFView(
-      layout: DCFLayout(
-        flex: 1,
-        padding: 20,
-        justifyContent: YogaJustifyContent.center,
-        alignItems: YogaAlign.center,
-      ),
-      children: [
-        DCFText(
-          content: 'Count: \${count.state}',
-          textProps: DCFTextProps(
-            fontSize: 24,
-            fontWeight: DCFFontWeight.bold,
-          ),
-        ),
-        DCFButton(
-          buttonProps: DCFButtonProps(title: 'Increment'),
-          onPress: (v) {
-            count.setState(count.state + 1);
-          },
-        ),
-      ],
-    );
-  }
-  
-  @override
-  List<Object?> get props => [];
-}`} />
+          <CodeBlock code={"class CounterApp extends DCFStatefulComponent {\n  @override\n  DCFComponentNode render() {\n    final count = useState(0);\n    \n    return DCFView(\n      layout: DCFLayout(\n        flex: 1,\n        padding: 20,\n        justifyContent: YogaJustifyContent.center,\n        alignItems: YogaAlign.center,\n      ),\n      children: [\n        DCFText(\n          content: 'Count: \\${count.state}',\n          textProps: DCFTextProps(\n            fontSize: 24,\n            fontWeight: DCFFontWeight.bold,\n          ),\n        ),\n        DCFButton(\n          buttonProps: DCFButtonProps(title: 'Increment'),\n          onPress: (v) {\n            count.setState(count.state + 1);\n          },\n        ),\n      ],\n    );\n  }\n  \n  @override\n  List<Object?> get props => [];\n}"} />
         </Section>
 
         <Section title="Todo List">
           <p className="text-gray-600 mb-4">
             A todo list app with dynamic list rendering:
           </p>
-          <CodeBlock code={`class TodoApp extends DCFStatefulComponent {
-  @override
-  DCFComponentNode render() {
-    final todos = useState<List<String>>([]);
-    final input = useState('');
-    
-    return DCFView(
-      layout: DCFLayout(
-        flex: 1,
-        padding: 20,
-        gap: 10,
-      ),
-      children: [
-        DCFTextInput(
-          value: input.state,
-          onChange: (text) {
-            input.setState(text);
-          },
-        ),
-        DCFButton(
-          buttonProps: DCFButtonProps(title: 'Add Todo'),
-          onPress: (v) {
-            if (input.state.isNotEmpty) {
-              todos.setState([...todos.state, input.state]);
-              input.setState('');
-            }
-          },
-        ),
-        ...todos.state.map((todo) => 
-          DCFText(
-            content: todo,
-            textProps: DCFTextProps(fontSize: 16),
-          )
-        ),
-      ],
-    );
-  }
-  
-  @override
-  List<Object?> get props => [];
-}`} />
+          <CodeBlock code={"class TodoApp extends DCFStatefulComponent {\n  @override\n  DCFComponentNode render() {\n    final todos = useState<List<String>>([]);\n    final input = useState('');\n    \n    return DCFView(\n      layout: DCFLayout(\n        flex: 1,\n        padding: 20,\n        gap: 10,\n      ),\n      children: [\n        DCFTextInput(\n          value: input.state,\n          onChange: (text) {\n            input.setState(text);\n          },\n        ),\n        DCFButton(\n          buttonProps: DCFButtonProps(title: 'Add Todo'),\n          onPress: (v) {\n            if (input.state.isNotEmpty) {\n              todos.setState([...todos.state, input.state]);\n              input.setState('');\n            }\n          },\n        ),\n        ...todos.state.map((todo) => \n          DCFText(\n            content: todo,\n            textProps: DCFTextProps(fontSize: 16),\n          )\n        ),\n      ],\n    );\n  }\n  \n  @override\n  List<Object?> get props => [];\n}"} />
         </Section>
       </div>
     </motion.div>

@@ -26,7 +26,7 @@ const roadmapData: RoadmapItem[] = [
   },
   {
     title: "DCFlight iOS",
-    status: "in-progress",
+    status: "completed",
     items: [
       "DCFView - Basic container component",
       "DCFText - Text rendering with styling",
@@ -50,14 +50,26 @@ const roadmapData: RoadmapItem[] = [
   },
   {
     title: "DCFlight Android",
-    status: "planned",
+    status: "completed",
     items: [
-      "Android component protocol design",
-      "Kotlin/Java native component implementations",
-      "Android-specific layout handling",
-      "Material Design integration",
-      "Android lifecycle management",
-      "Platform-specific optimizations"
+      "DCFView - Basic container component",
+      "DCFText - Text rendering with styling",
+      "DCFButton - Interactive button component",
+      "DCFImage - Image display with caching",
+      "DCFScrollView - Scrollable container",
+      "DCFTouchableOpacity - Touch interactions",
+      "DCFTextInput - Text input fields",
+      "DCFSafeAreaView - Safe area handling",
+      "DCFGestureDetector - Gesture recognition",
+      "DCFAnimatedView - View animations",
+      "DCFAnimatedText - Text animations",
+      "DCFSVG - SVG image support",
+      "DCFIcon - Icon system",
+      "DCFDropdown - Dropdown menu",
+      "DCFFlatList - High-performance lists",
+      "Modal components",
+      "Navigation components",
+      "Advanced animations"
     ]
   },
   {
@@ -86,9 +98,12 @@ const roadmapData: RoadmapItem[] = [
   },
   {
     title: "Ecosystem & Tooling",
-    status: "planned",
+    status: "in-progress",
     items: [
-      "Component marketplace",
+      "Component marketplace (pub.dev packages available)",
+      "DCF Primitives - Core UI components",
+      "DCF Animations - Animation utilities",
+      "DCF Navigation - Routing and navigation",
       "Third-party plugin system",
       "VSCode extension with IntelliSense",
       "Project templates and starters",
